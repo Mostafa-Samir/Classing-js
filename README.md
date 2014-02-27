@@ -30,7 +30,7 @@ Start a quick tutorial to learn how to use the library : www.classing.co.nf/tuto
 Follow <b>Classing{js}</b> on <a href = "https://twitter.com/classing_js">Twitter</a> to keep up with what's new.
 
 ##Your Contributions are Valuable
-There's a lot more to be done in <b>Classing{js}</b>, and your contribution will certailny help acheving this whether it is :
+There's a lot more to be done in <b>Classing{js}</b>, and your contribution will certailny help acheving this whether it is:
 <ul>
 <li>a bug report.</li>
 <li>a code optimization.</li>
