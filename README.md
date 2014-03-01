@@ -16,6 +16,7 @@ like any regular classical object oriented environment.<br/>
 <li><p>Creating and implemeting mutiple interfaces.</p></li>
 </ul>
 
+
 Here's an example of what you can do with <b>Classing{js}:</b>
 ``` javascript
 var Shape = Abstract.Class({
