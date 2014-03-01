@@ -1,0 +1,12 @@
+@import url('jquery.snippet.min.css');
+
+pre {
+	margin:0px;
+}
+
+.snippet-wrap pre.sh_sourceCode {
+	border-radius: 10px;
+	border-top-left-radius: 0px;
+	-webkit-border-radius:10px;
+	-webkit-border-top-left-radius:0px;
+}

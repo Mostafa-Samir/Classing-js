@@ -1,0 +1,39 @@
+@import url('bootstrap.slate.css');
+
+.hero-unit {
+	background-image: url('../img/bg.png');
+	font-family: monospace;
+	padding-bottom: 16px;
+}
+
+.nav-tabs {
+	margin: 0px;
+}
+
+.tab-content {
+	/*height: 323px;
+	overflow:hidden;*/
+	border-color: #3a3f44;
+	border-style: solid;
+	border-radius: 10px;
+	border-top-left-radius: 0px;
+	-webkit-border-radius:10px;
+	-webkit-border-top-left-radius: 0px;
+}
+
+#reach:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.navbar .brand {
+	font-family : monospace;
+	font-size:xx-large;
+}
+
+.btn-inverse {
+	color:#c8c8c8;
+}
+.footer{
+	border-top-style:double;
+}

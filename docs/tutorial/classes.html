@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/docs-style.css">
+		<title>Tutorial : Creating Classes</title>
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-th-list"></span></a>
+					<a href="#" class="brand">Classing{js}</a>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-unit">
+			<h3>Classing{js} Tutorial</h3>
+			<h1>Creating Classes</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li><a href="../index.html">API Summery</a></li>
+					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="overload.html">Function Overloading</a></li>
+					<li class = "active"><a href="classes.html">Creating Classes</a></li>
+					<li><a href="inheritance.html">Inheritance</a></li>
+					<li><a href="abstract.html">Abstract Classes</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<h3>How to create Classes?</h3>
+				<p>This what <code>Classing{js}</code> is all about , classes. Creating a class is very simple task , just call the function <code>Class</code>
+				</p>
+				<div class = "doc">
+					<div class="doc-header">Class</div>
+					<div class="doc-api">Class(defintion)</div>
+					<div class="doc-component">
+						<span class="name">defintion</span>
+						<span class="type">Object</span>
+						<p><span class="description">The defintion of the class</span></p>
+					</div>
+					<div class="doc-component">
+						<span class="name">returns</span>
+						<span class="type">_classPattern Function</span>
+						<p><span class="description">the created class </span></p>
+					</div>
+				</div>
+				<p>The easiest way to start is by writing the pattern in the follwing code and then continue with writing the defintion of your class:</p>
+				<pre class="code">
+var ClassName = Class({
+	//Your defintion goes here
+});
+				</pre>
+				<h3>Filling your Class</h3>
+				<p>before writing your class' components , you need to define the access level of these components. Assigning an access level to some components is done by placing them into one of the three access modifier objects : <b>private</b> , <b>protected</b> , or <b>public</b></p>
+				<ul>
+					<li>a <b>private</b> component can only be accessed form within the class components , it cannot be accesed from outside.</li>
+					<li>a <b>protected</b> component can be accessed from within the components of the class itself or any of its derived classes (we'll come to that in inheritance) and not from outside.</li>
+					<li>a <b>public</b> component can be accessed from anywhere</li>
+				</ul>
+				<p>The access modifers of <code>Classing{js}</code> follows the convetion of C++, which is that all the components of a certain access level are clustered together in a block specified by the access modifier (Unlike Java or C# in which every component is preceeded by the access modifier).
+				<p>In <code>Classing{js}</code> a block specifying an access level is writtenn as an object named with the related access modifier. For better understanding , take a look at this code : </p>
+				<pre class="code">
+var Test = Class({
+	private : {
+		//Your private compnents go here
+	},
+
+	protected : {
+		//Your protected components go here
+	},
+
+	public : {
+		//Your public components go here
+	}
+});
+				</pre>
+				<p></p>
+				<p>You can ,of course, write one , two or all the three access modifers in your class (or you could write nothing if you want your class empty)</p>
+				<div class="heads-up">
+					<h4>Reminder</h4>
+					<div style = "width:600px;">Note that the Class defintion is just a regular javascript object , and that the access modifers are simply proprties of this object. So make sure you don't forget the comma ',' between every access modifer and the other in case you wrote more than one modifier.</div>
+				</div>
+				<p>Now, you can start filling in your components , each inside its desired access level , in the same way you write proprties in a regular javascript object <span style ="color:red;"><b>(again, don't forget the commas)</b></span></p>
+				<p>Here's an example of a full class : </p>
+				<pre class="code">
+var Person = Class({
+	private : {
+		counter:Static(0),
+		name : null,
+	},
+	public : {
+		getCount : Static(function(){return Person.counter;}),
+		Construct : function(){ Person.counter++; },
+		Name : {
+			get : function() { return this.name; },
+			set : function(value) { this.name = value; }
+		}
+	}
+});					
+				</pre>
+				<p>Now, we'll spend some time going through what you can put as a component for your class.</p>
+				<div class = "intended">
+				<h4>Attributes</h4>
+				<p>an attribute is a component which is not a method or a property (a property is a component that has a getter and a setter, as we'll know shortly). An attribute is simply written as :</p>
+				<pre class="code">
+attributeName : attributeValue
+				</pre>
+				<p>If you want to make this attribute static , just wrap the <code>attributeValue</code> with the function <code>Static</code></p>
+				<pre class="code">
+attributeName : Static(attributeValue)
+				</pre>
+				<p>Here is an exmaple of a class with two attributes , a protecetd static attribute called <b>ClassName</b>, and a public non-static attribute called <b>Id.
+				</b></p>
+				<pre class="code">
+var AllAttributes = Class({
+	protected : {
+		ClassName : Static("AllAttributes")
+	},
+	public : {
+		Id : null
+	}
+})
+				</pre>
+				<p>The attribute could be intialized to any value of any type but there's a little limitation on non-static attributes. A non-static attributes cannot be intialized to an object, doing so will throw an error.</p>
+				<pre class="code">
+var Matrix = Class({
+	private : {
+		internalArray : new Array() //Error
+	}
+});
+				</pre>
+				<p>This limitation can be overcame by intially setting the attribute to null , then resetting it to the desired object inside the constructor of the class, like in the following example:</p>
+				<pre class="code">
+var Matrix = Class({
+	private : {
+		internalArray : null
+	},
+	Construct : function() {
+		this.internalArray = new Array();
+	}
+});
+				</pre>
+				<hr/>
+				<h4>Methods</h4>
+				<p>Methods are simply functions. They are defined in the same way used in regular javascript objects. They can be regular function or <code>Classing{js}</code> overloaded functions, and like attributes if a method is desired to be static it's just wraped with the <code>Static</code> function.</p>
+				<pre class="code">
+var Employee = Class({
+	private : {
+		counter : Static(0),
+		hoursWorked : 0,
+		hourlyRate : 10
+	},
+	public : {
+		Construct : function() { Employee.counter++; },
+		getEmployeesCount : Static(function(){return Employee.counter}),
+		calculatePayment : function() {
+			return this.hoursWorked * this.hourlyRate;
+		},
+		incraseHoursWorked : function () { this.hoursWorked++;},
+		changeHourlyRate : Function.create(xTyped , [
+			types(Number),
+			function(newVal) {
+				if(newVal > 0) {
+					this.hourlyRate = newVal;
+				}
+			}
+		])
+	}
+});
+				</pre>
+				<p>As it appears in the above example. accessing any <b>non-static</b> component of the class inside one of its methods is done through <code>this.<i>componentName</i></code>, while accessing <b>static</b> components is done through <code><i>className.componentName</i></code></p>.
+				<p>The <b>constructor function</b> is a special method of the class, identified with the name <code>Construct</code>. the constructor function gets called upon the creation of the object and cannot be invoked again. If you didn't write a constructor function for your class , a default (0-arguments) constructor will be automatically generated for the class. On the other hand , if you did define a constructor function , the default constructor will not be automatically generated and you must write it yourself. Like any other method , the constructor could be a regular function or <code>Classing{js}</code> overloaded functions and follows the same rules in accessing the class' components.</p>
+
+				<p>To create a <b>copy constructor</b> ,use the typed overloading mode of <code>Function.create</code> and add an instance with an associated type of <code>xSelf</code> which points the class being created <span style="color:red"><b>(Do Not use the class name in the copy constructor, doing so will throw an error)</b></span></p>
+				<p>Here's an example of a class with a default , a 1-argument and a copy constructors</p>
+				<pre class="code">
+var Human = Class({
+	private: {
+		age : 0
+	},
+	public: {
+		Construct : Function.create(xTyped , [
+			types(), //Default
+			function(){},
+			types(Number), //1-argument
+			function(a) {
+				if(a >= 0) {
+					this.age = a;
+				}
+			},
+			types(xSelf), //Copy
+			function(other) {
+				this.age = other.age;
+			}
+		])
+	}
+});
+				</pre>
+				<hr/>
+				<h4>Proprties</h4>
+				<p>A <b>property</b> is a component that is defined with a getter and a setter. It's used to manipulate the attributes of the class (specially those with restricted access levels). It's defined as a regular javascript object with two functions named <b>get</b> and <b>set</b></p>
+				<pre class="code">
+propertyName : {
+	get : function(){...}, //the getter function
+	set : function(value){...} , //the setter function
+}
+				</pre>
+				<p>Like attributes and methods , if a property is desired to be static it's just wrapped with the <code>Static</code> function. Here is an example of a class that contains three proprties, one of them is static.</p>
+				<pre class="code">
+var PhoneBookRecord = Class({
+	private : {
+		count : Static(0),
+		phoneNum : null,
+		name : null
+	},
+	public : {
+		Construct : Function.create(xTyped , [
+			types(String , String),
+			function(name , number) {
+				PhoneBookRecord.count++;
+				var NumPattern = new RegExp(/^\d{3}-\d{7}$/);
+				var NamePattern = new RegExp(/^[A-Z][a-z]* [A-Z][a-z]*$/);
+				if(NumPattern.test(number) && NamePattern.test(name)) {
+					this.name = name;
+					this.phoneNum = number;
+				}
+			}
+		]),
+		NumberOfRecords : Static({
+			get : function() { return PhoneBookRecord.count; },
+			set : function(value){}
+		}),
+		PhoneNumber : {
+			get : function() { return this.phoneNum; },
+			set : function(value) {
+				var pattern = new RegExp(/^\d{3}-\d{7}$/);
+				if(pattern.test(value)) {
+					this.phoneNum = value;
+				}
+			}
+		},
+		Name : {
+			get : function(){ return this.name; },
+			set : function(value) {
+				var pattern = new RegExp(/^[A-Z][a-z]* [A-Z][a-z]*$/);
+				if(pattern.test(value)) {
+					this.name = value;
+				}
+			}
+		}
+	}
+});
+				</pre>
+				<p> the <code>NumberOfRecords</code> property is a static property that returns the value of the static attribute <code>count</code>, which represents the number of records created so far, and because the setter of <b>NumberOfRecords</b> does nothing, assigning a new value to <b>NumberOfRecords</b> will change nothing.</p>
+				<p>The <code>Name</code> property is used to get or set the attribute <code>name</code> asocciated with the record. the setter function of <b>Name</b> performs a test before assigning a new value to the attribute <b>name</b>. the test checks if the new value is string of capital intials first and last name seperated by a whitespace. If the new value passes the test, it's assigned to <b>name</b>. If not , the value of <b>name</b> remains the same. A similar proccess happens with the <code>Number</code> property that manipulates the <code>phoneNum</code> attribute. </p>
+				<div class="heads-up" style="width:600px;">
+					<h4>Notice</h4>
+					<p>You can't call a non-static component from a static context, e.g. you can't access a non-static attribute from a static method. On the other hand, you can access static components from non-static context.</p>
+				</div>
+				</div>
+				<h3>Instantiating Objects</h3>
+				<p>Instantiating an object of class you created through <b>Classing{js}</b> <code>Class</code> is done in the same way any object in any language is instantiated , using the <code>new</code> keyword.</p>
+				<p>To create a new <code>PhoneBookRecord</code> we write:
+				<pre class="code">
+var record1 = new PhoneBookRecord("John Doe" , "102-3456789");
+				</pre>
+				</p>
+			</div>
+		</div>
+
+
+
+		<script src="../js/jquery-1.10.1.min.js"></script>
+		<script src="../js/jquery-browser.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+
+		<script src="../js/jquery.snippet.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				});
+
+				
+			});
+		</script>
+	</body>
+</html>

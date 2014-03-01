@@ -1,0 +1,26 @@
+@import url('docs-style.css');
+
+.doc {
+	display: block;
+}
+
+.to-top {
+	font-size: 50px;
+	color: black;
+	font-family: monospace;
+	background: lightgray;
+	display: inline-block;
+	padding-top: 20px;
+	bottom: 0px;
+	right: 10px;
+	position: fixed;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	opacity: 0.2;	
+	cursor: pointer;
+}
+
+.to-top:hover{
+	opacity: 1;
+	color:black;
+}

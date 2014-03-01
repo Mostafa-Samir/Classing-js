@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/docs-style.css">
+		<title>Tutorial : Inheritance</title>
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-th-list"></span></a>
+					<a href="#" class="brand">Classing{js}</a>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-unit">
+			<h3>Classing{js} Tutorial</h3>
+			<h1>Inheritance</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li><a href="../index.html">API Summery</a></li>
+					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="overload.html">Function Overloading</a></li>
+					<li><a href="classes.html">Creating Classes</a></li>
+					<li class = "active"><a href="inheritance.html">Inheritance</a></li>
+					<li><a href="abstract.html">Abstract Classes</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<h3>A Quick Review on The Concept of Inheritance</h3>
+				<p>Inheritance is a mechanism for code reuse. The concept is similar to inheritance in living things : a child 'inherits' the behaviour and the traits of its parent, and in object oriented programming : a child class 'inherits' the behaviour (methods) and the traits (attributes and proprties) of its parent class.</p>
+				<p>Class inheritance follows the following rules :
+					<ul>
+						<li>Only public and protected components of the parent class are inherited.</li>
+						<li>An inherited component in the child has the same access level it has in the parent.</li>
+						<li>Constructors are not inherited.</li>
+						<li>A method in the parent class can be overriden in the child class, meaning that the method can be changed (in parameters , body or both) while having the same name.</li>
+					</ul>
+				</p>
+				<h3>How Inheritance is done ?</h3>
+				<p>In <code>Classing{js}</code>, inheritance is done using <code>Class.Extends</code> as in the following code : </p>
+				<pre class="code">
+var Child = Class.Extends(/* Parent's Reference */)({
+	/* The Defintion of The Class */
+});
+				</pre>
+				<p>Here's an example of a class named <b>Rectangle</b> inherting from a class named <b>Shape</b>:</p>
+				<pre class="code">
+var Shape = Class({
+	protected : {
+		height: null,
+		width : null,
+	},
+	public : {
+		Height : {
+			get : function() {return this.height;},
+			set : function(value) {this.height = value;}
+		},
+		Width : {
+			get : function() {return this.width;},
+			set : function(value) {this.width = value;}
+		},
+		Area : function() {
+			return "Not Implemented";
+		}
+	}
+});
+
+var Rectangle = Class.Extends(Shape)({
+	public : {
+		Area : function() {
+			return this.width*this.height;
+		}
+	}
+});
+				</pre>
+				<p>Notice that the <b>Rectangle</b> class overrides the <b>Area</b> method to calculate the area of the rectangle instead of returning <b><span style="color:red;">"Not Implemented"</span></b>.</p>
+				<p>According to the second rule of inheritance mentioned above, any object of the <b>Rectangle</b> class will be able to access any of the two protected inherited attributes <b>height</b> and <b>width</b> inside its proprties and methods (like in the overriden method <b>Area</b>). And the two public inherited proprties <b>Height</b> and <b>Width</b> can be accessed from within or outside the class from the object.</p>
+				<h3>The 'base' Keyword</h3>
+				The <code>base</code> keyword gives you access to the parent object within the methods and proprties of the child. It's particulary helpful in two cases : the chaining of constructors, and method overriding.
+				<p>In the <b>chaining of constructors</b>, as we know , when the constructor of the child is invoked, it automatically invokes the constructor of the parent, and if there is no default constructor for the parent, the system can't guess what constructor to be invoked instead and how to pass the arguments to it. So, in the case of no default constructor in the parent, the developer has to invoke the paren't constructor manually, and this is when <code>base</code> comes in hand. </p>
+				<p>Using <code>base</code> as a function in a constructor function of the child invokes the constructor of the parent class. Here's an example:</p>
+				<pre class="code">
+var Shape = Class({
+	protected : {
+		height: null,
+		width : null,
+	},
+	public : {
+		Construct : Function.create(xTyped , [
+			types(Number,Number),
+			function(a , b) {
+				this.height = a;
+				this.width = b;
+			}
+		]),
+		Height : {
+			get : function() {return this.height;},
+			set : function(value) {this.height = value;}
+		},
+		Width : {
+			get : function() {return this.width;},
+			set : function(value) {this.width = value;}
+		},
+		Area : function() {
+			return "Not Implemented";
+		}
+	}
+});
+
+var Rectangle = Class.Extends(Shape)({
+	public : {
+		Construct : Function.create(xTyped, [
+			types(),
+			function() {
+				base(0,0);
+			},
+			types(Number,Number),
+			function(x,y) {
+				base(x,y);
+			}
+		]),
+		Area : function() {
+			return this.width*this.height;
+		}
+	}
+});
+				</pre>
+				<p>Here we changed in the <b>Shape</b> class and added a 2-arguments constructor and no default constructors, and in the constructors of the <b>Rectangle</b> class we invoked the <b>Shape</b> constructor using <code>base</code> as a function and passed to it the desired arguments.</p>
+				<p>In the case of <b>methods overriding</b>, sometimes we just need to add functionality to the overriden method not change it completely. To do this we can invoke the parent implemetation of the method inside the overriding instance in the child using <code>base.methodName()</code> and then add the new functionality we want. Here's an example:</p>
+				<pre class="code">
+var Person = Class({
+	public : {
+	    Greet : function() { return "Hi"; }
+	}
+});
+var HotelResptionest = Class.Extends(Person)({
+	public : {
+		Greet : function() {
+			return base.Greet() + ", Welcome to our hotel"; //returns "Hi, Welcome to our hotel"
+		}
+	}
+});
+				</pre>
+				<br/>
+				<div class="heads-up">
+					<h4>Heads Up!</h4>
+					<ul>
+						<li><b>base</b> can be used as function only inside the constructor of the child class.</li>
+						<li>Although it's not a reserved word, you should treat <b>base</b> as if it was a reserved word. Naming any of your variables with <b>base</b> may result in an unexpected behaviour.</li>
+					</ul>
+				</div>
+				<h3>The 'Final' Keyword</h3>
+				<p><code>Final</code> is used for two purposes :
+					<ul>
+						<li>Marking a method not to be overriden in any child class</li>
+						<li>Marking a class unextensible (No class can inherit from this class)</li>
+					</ul>
+					For <b>final methods</b> , the method is wrapped with the function <code>Final</code> like we do with wrapping static components with the function <code>Static</code>. Here's an example:
+				</p>
+				<pre class="code">
+var Person = Class({
+	protected : {
+		name : null,
+		age : null,
+	},
+	public : {
+		Construct : Function.create(xTyped , [
+			types(String,Number),
+			function(a , b) {
+				this.name = a;
+				this.age = b;
+			}
+		]),
+		getInfo : Final(function() {return "Name: " + this.name + ", Age: " + this.age;})
+	}
+});
+				</pre>
+				<p>Attempting to override a final method will throw an error.</p>
+				<pre class="code">
+var VIP = Class.Extends(Person)({
+	public : {
+		getInfo : function(){return "VIP";} //throws an error
+	}
+});	
+				</pre>
+				<p></p>
+				<p>To create <b>final classes</b>, <code>Final.Class</code> is used in the following manner:</p>
+				<pre class="code">
+//for a parent class				
+var ClassName = Final.Class({
+	/* Your defintion goes here */
+});
+
+//for a child class
+var ClassName = Final.Class.Extends(someParent)({
+	/* Your defintion goes here */
+})
+				</pre>
+				<p>Here's an example:</p>
+				<pre class="code">
+var Parent = Class({
+	protected : {
+		name: null,
+		age : null,
+	},
+	public : {
+		Name : {
+			get : function() {return this.name;},
+			set : function(value) {this.name = value;}
+		},
+		Age : {
+			get : function() {return this.age;},
+			set : function(value) {this.age = value}
+		}
+	}
+});
+
+var InfertileChild = Final.Class.Extends(Parent)({});
+
+var ImpossibleChild = Class.Extends(InfertileChild)({}) //throws an error
+				</pre>
+			</div>
+		</div>
+
+
+
+		<script src="../js/jquery-1.10.1.min.js"></script>
+		<script src="../js/jquery-browser.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+
+		<script src="../js/jquery.snippet.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				});
+
+				
+			});
+		</script>
+	</body>
+</html>

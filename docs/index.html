@@ -1,0 +1,481 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="css/override.docs.style.css">
+		<title>Tutorial : Function Overloading</title>
+	</head>
+
+	<body>
+		<!--<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-th-list"></span></a>
+					<a href="#" class="brand">Classing{js}</a>
+					
+				</div>
+			</div>
+		</div>-->
+
+		<div class="hero-unit" id="top">
+			<h3>Classing{js} Documentation</h3>
+			<h1>API Summery</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li class="nav-header">API Summery</li>
+						<li class="tabbed active"><a href="#functionCreate">Function.create</a></li>
+						<li class="tabbed"><a href="#types">types</a></li>
+						<li class="tabbed"><a href="#xstamp">xStamp</a></li>
+						<li class="tabbed"><a href="#class">Class</a></li>
+						<li class="tabbed"><a href="#static">Static</a></li>
+						<li class="tabbed"><a href="#final">Final</a></li>
+						<li class="tabbed"><a href="#finalClass">Final.Class</a></li>
+						<li class="tabbed"><a href="#abstract">Abstract</a></li>
+						<li class="tabbed"><a href="#abstractClass">Abstract.Class</a></li>
+						<li class="tabbed"><a href="#extends">Class.Extends</a></li>
+						<li class="tabbed"><a href="#interface">Interface</a></li>
+						<li class="tabbed"><a href="#implements">Class.Implements</a></li>
+					<li><a href = "tutorial/overload.html">Detailed Tutorial</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<div class="row-fluid" id="functionCreate">
+					<div class="span6">
+						<div class = "doc">
+							<div class="doc-header">Function.create</div>
+							<div class="doc-api">
+								Function.create(mode , overloads)
+							</div>
+							<div class = "doc-component">
+								<span class="name">mode</span>
+								<span class="type">Boolean</span>
+								<p><span class = "description">The mode of Overloading :typed or non-typed.<code>true</code> for typed , <code>false</code> for non-typed</span></p>
+							</div>
+							<div class = "doc-component">
+								<span class="name">overloads</span>
+								<span class="type">Array</span>
+								<p><span class = "description">an array containing the overloads.</span></p>
+							</div>
+							<div class ="doc-component">
+								<span class = "name">returns</span>
+								<span class = "type">Function</span>
+								<p><span class = "description"> the overloaded function</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>In non-typed overloading, the overloads array is an array of functions.</li>
+							<li>In typed overloading, an instance takes two elements in the overloads array : the first is for the type list (using <a href="#types"><code>types</code></a>), and the second is for the function itself.</li>
+							<li>Instead of passing <b>true</b> or <b>false</b> to the mode parameter, you can pass <code>xTyped</code> or <code>xNonTyped</code>.</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Add = Function.create(xNonTyped , [
+	function(a,b){return a + b;},
+	function(a,b,c){return a + b + c;}
+]);
+						</pre>
+					</div>
+				</div>
+				<hr/>
+				<div class="row-fluid" id = "types">
+					<div class="span6">
+						<div class="doc">
+							<div class = "doc-header">types</div>
+							<div class = "doc-api">
+								types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
+							</div>
+							<div class="doc-component">
+								<span class = "name">c<sub>i</sub></span>
+								<span class = "type">Function</span>
+								<p><span class = "description">the constructor function of the type (either native or custom)</span></p>
+							</div>
+							<div class = "doc-component">
+								<span class="name">returns</span>
+								<span class="type">_xTypes Object</span>
+								<p><span class="description">the type list object to be passed to <code>Function.create</code></span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>Native, custom constructor functions with a name and Classes are recognized.</li>
+							<li>Custom anonymous constructor function must be <a href="#xstamp">stamped</a> to be recognized.</li>
+							<li>In copy constructors, use <code>xSelf</code> to point to the class being created.</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Add = Function.create(xTyped , [
+	types(Number,Number),
+	function(a,b) { return a + b}
+]);
+						</pre>
+					</div>
+				</div>
+				<!--End or row-->
+				<hr/>
+				<div class="row-fluid" id="xstamp">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">xStamp</div>
+							<div class="doc-api">xStamp(Constructor)</div>
+							<div class="doc-component">
+								<span class="name">Constructor</span>
+								<span class="type">Function</span>
+								<p><span class="description">the custom constructor function to be stamped for recognition</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">void</span>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Example:</h4>
+						<pre class="code">
+var Complex = function(re , img) {
+	this.re = re; this.img = img;}
+xStamp(Complex);
+var Add = Function.create(xTyped , [
+	types(Complex,Complex),function(Z,W){
+		return new Complex(Z.re + W.re,Z.img + W.img);
+	}
+]);
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row-->
+				<hr/>
+				<div class="row-fluid" id="class">
+					<div class="span6">
+						<div class = "doc">
+							<div class="doc-header">Class</div>
+							<div class="doc-api">Class(defintion)</div>
+							<div class="doc-component">
+								<span class="name">defintion</span>
+								<span class="type">Object</span>
+								<p><span class="description">The defintion of the class</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">_classPattern Function</span>
+								<p><span class="description">the created class </span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>The proprties names of the <code>defintion</code> object are one, two or all of the following: private,protected and public(which are the access modifiers).</li>
+							<li>Each access modifier is itself an object whose proprties are the class components having that accces level.</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Person = Class({
+	public : { name : "John Doe"}
+});
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row -->
+				<hr/>
+				<div class="row-fluid" id="static">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Static</div>
+							<div class="doc-api">Static(component)</div>
+							<div class="doc-component">
+								<span class="name">component</span>
+								<span class="type">unspecific</span>
+								<p><span class="description">the component to be marked static.</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Object</span>
+								<p><span class="description">an object wrapping the component and marked with an <code>isStatic</code> property.</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Example:</h4>
+						<pre class="code">
+var Person = Class({
+	public: {
+		counter : Static(0),
+		Construct: function(){Person.counter++;}
+	}
+})
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row -->
+				<hr/>
+				<div class="row-fluid" id="final">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Final</div>
+							<div class="doc-api">Final(method)</div>
+							<div class="doc-component">
+								<span class="name">method</span>
+								<span class="type">Function</span>
+								<p><span class="description">The function to be marked as final</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Function</span>
+								<p><span class="description">The marked function</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Example:</h4>
+						<pre class="code">
+var Visitor  = Class({
+	private : { id : null},
+	public: {
+		Construct : function() { this.id = Date.now();},
+		getId : Final(function(){return this.id;})
+	}
+})
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row -->
+				<hr/>
+				<div class="row-fluid" id="finalClass">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Final.Class</div>
+							<div class="doc-api">Final.Class</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Function</span>
+								<p><span class="description">The <a href="#class">Class</a> function</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>This marks the class final (unextensible).</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Infertile = Final.Class({
+	public : {name : null}
+})
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row -->
+				<hr/>
+				<div class="row-fluid" id="abstract">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Abstract</div>
+							<div class="doc-api">Abstract(method)</div>
+							<div class="doc-component">
+								<span class="name">method</span>
+								<span class="type">Function</span>
+								<p><span class="description">The function to be marked abstract.</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Function</span>
+								<p><span class="description">The marked function.</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>An abstract function must be inside an <a href="#abstractClass">abstract class</a></li>
+							<li>The body of the argumnt <code>method</code> must be empty. if it's an overloaded function, all the instances must have empty bodies.</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Child = Abstract.Class({
+	public: { Play : Abstract(function(){}) }
+});
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row -->
+				<hr/>
+				<div class="row-fluid" id="abstractClass">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Abstract.Class</div>
+							<div class="doc-api">Abstract.Class</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Function</span>
+								<p><span class="description">The <a href="#class">Class</a> function</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>Marks the class as abstract. It must have at least one <a href="#abstract"><code>Abstract</code></a> function. </li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var Shape = Abstract.Class({
+	public : { Area : Abstract(function(){})}
+});
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row-->
+				<hr/>
+				<div class="row-fluid" id="extends">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Class.Extends</div>
+							<div class="doc-api">Class.Extends(Parent)</div>
+							<div class="doc-component">
+								<span class="name">Parent</span>
+								<span class="type">_classPattern Function</span>
+								<p><span class="description">The parent class</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Function</span>
+								<p><span class="description">The <a href="#class">Class</a> function.</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<li>To access the parent object, use the <code>base</code> keyword.</li>
+						<h4>Example:</h4>
+						<pre class="code">
+var Child = Class.Extends(Parent)({
+	public : {
+		newFunc : function(){ return "function of child"; }
+	}
+});
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row-->
+				<hr/>
+				<div class="row-fluid" id="interface">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Interface</div>
+							<div class="doc-api">Interface(defintion)</div>
+							<div class="doc-component">
+								<span class="name">defintion</span>
+								<span class="type">Object</span>
+								<p><span class="description">The defintion of the interface.</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Object</span>
+								<p><span class="description">The Object represinting the interface</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<ul>
+							<li>Each proprty in the <code>defintion</code> object is a function with empty body. if it's an overloaded function, all the instances must have empty bodies.</li>
+							<li>All methods of an interface are public.</li>
+						</ul>
+						<h4>Example:</h4>
+						<pre class="code">
+var IPayable = Interface({
+	getPaid : function()
+})
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row-->
+				<hr/>
+				<div class="row-fluid" id="implements">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Class.Implements</div>
+							<div class="doc-api">Class.Implements(i<sub>1</sub>,i<sub>2</sub>,...)</div>
+							<div class="doc-component">
+								<span class="name">i<sub>j</sub></span>
+								<span class="type">Object</span>
+								<p><span class="description">an interface to be implemented.</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</sub></span>
+								<span class="type">Function</span>
+								<p><span class="description">The <a href="#class">Class</a> function.</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<li>The following order of extending and implementing is forced:</li>
+						<p style="margin-left:20px;"><code>Class.Extends(...).Implements(...)</code></p>
+						<h4>Example:</h4>
+						<pre class="code">
+var Employee = Class.Implements(IPayable)({
+	public: {getPaid : function(){return "$5000.00"}}
+})
+						</pre>
+					</div>
+				</div>
+			</div>
+		</div>
+		<a href = "#top" class="to-top">^</a>
+
+		<script src="js/jquery-1.10.1.min.js"></script>
+		<script src="js/jquery-browser.min.js"></script>
+		<script src="js/jquery.snippet.min.js"></script>
+		<script src="js/jquery.smooth-scroll.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				});
+
+				/**Height Coordination**/
+				$(".doc").each(function(){
+					var docsHeight = parseFloat($(this).css('height'));
+					var adjacentHeight = parseFloat($(this).parent().next().css('height'));
+					if(adjacentHeight - docsHeight > 6.5) {
+						$(this).css('height' , adjacentHeight - 6.5);
+					}
+				});
+
+				$("a").smoothScroll();
+
+				/** in page active toggle **/
+				$(".tabbed").each(function(){
+					$(this).click(function(){
+						$(".active").removeClass("active");
+						$(this).addClass("active");
+					});
+				});
+			});
+		</script>
+	</body>
+</html>

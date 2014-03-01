@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/docs-style.css">
+		<title>Tutorial : Function Overloading</title>
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-th-list"></span></a>
+					<a href="#" class="brand">Classing{js}</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-unit">
+			<h3>Classing{js} Tutorial</h3>
+			<h1>Function Overloading</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li><a href="../index.html">API Summery</a></li>
+					<li class="nav-header">Detailed Tutorial</li>
+					<li class="active"><a href="overload.html">Function Overloading</a></li>
+					<li><a href="classes.html">Creating Classes</a></li>
+					<li><a href="inheritance.html">Inheritance</a></li>
+					<li><a href="abstract.html">Abstract Classes</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<h3>Why Function Overloading ?</h3>
+				<p>The aim of <code>Classing{js}</code> is to create an object oriented environment that looks and behaves exactly like the classical object oriented environment.If you developed in a classical environment before (like C++ , Java or C#), you know that you can overload the constructor of the class to intialize the objects in differnt ways, including the way using an existing object of the same class (known as the copy constructor).So, to fully achive the aim of <code>Classing{js}</code>, function overloading was implemented to give the developer the ability to overload the constructors of classes and any other functions wanted. </p>
+				<h3>How to create overloaded functions ?</h3>
+				<p>Creating an overloaded function is done by calling the function <code>Function.create</code> in the way specified here , in the black box with the red gear:
+				<div class = "doc">
+					<div class="doc-header">Function.create</div>
+					<div class="doc-api">
+						Function.create(mode , overloads)
+					</div>
+					<div class = "doc-component">
+						<span class="name">mode</span>
+						<span class="type">Boolean</span>
+						<p><span class = "description">The mode of Overloading :typed or non-typed.<code>true</code> for typed , <code>false</code> for non-typed</span></p>
+					</div>
+					<div class = "doc-component">
+						<span class="name">overloads</span>
+						<span class="type">Array</span>
+						<p><span class = "description">an array containing the overloads.</span></p>
+					</div>
+					<div class ="doc-component">
+						<span class = "name">returns</span>
+						<span class = "type">Function</span>
+						<p><span class = "description"> the overloaded function</span></p>
+					</div>
+				</div>
+				</p>
+				<h3>Non-Typed Overloading</h3>
+				<p>An example of non-typed overloading is the function <code>say</code> defined in the following :
+					<pre class="code" id="code1">
+var say = Function.create(false , [
+	function(msg1) {
+		console.log(msg1);
+	},
+	function(msg1 , msg2) {
+		var concat = msg1 + " , " + msg2;
+		console.log(concat);
+	},
+	function(msg1 , msg2 , msg3 , msg4) {
+		var concat = msg1 + " , " + msg2 + " , " + msg3;
+		console.log(conact);
+	}
+]);
+					</pre>
+				</p>
+				<p>
+				<code>say</code> here has three instances that accepts one argument, two arguments and four arguments respectively with no restriction on the type of the argument passed. You can pass numbers , strings , objects or any thing and no error will be thrown.The only case an error will be thrown is if you passed a number of arguments that has no instance in the function. Namely , if you passed four or more , two or no arguments , an error will be thrown idicating that no instance matches the argument list.
+				<pre class="code" id = "code2">
+say("Hi"); //Ok
+say("Hi" , 5); //Ok
+say("Hi" , "Welcome" , "to Classing{js}" , 1) //Ok
+
+say(); //Error
+say("Hi" , "Welcome" , "to Classing{js}"); //Error
+sya("Hi" , "Welcome" , "to Classing{js}" , "v" , 1 , "." , 0); //Error
+				</pre>
+				</p>
+				<p>To make the code more readable , the library provides the constnat <code>xNonTyped</code> which is equal to <code>false</code> that can be passed as the first argument to <code>Function.create</code> indicating a non-typed overloading mode.
+				<pre class="code" id="code3">
+var add = Function.create(xNonTyped , [function(a,b){return a+b;} , function(a,b,c){return a+b+c;}]);
+				</pre>
+				</p>
+				<p>
+					<div class = "heads-up">
+						<h4>Heads Up !</h4>
+						<ul>
+							<li>The overloads array must contain only functions. if a non-function element exists , an error will be thrown.</li>
+							<pre class="code" id = "code4">
+var join = Function.create(xNonTyped , [function(a,b){return a + "," + b;} , "function(){}"]); //Error
+							</pre>
+							<li>each function in the overloads array must have a unique number of parameters. if two functions had the same number of parameters , an error will be thrown.</li>
+							<pre class="code" id = "code5">
+var echo = Function.create(xNonTyped , [function() {return "Void";} , function(a){return a;} , function(b) {return "'" + b + "'";}]); //Error
+							</pre>
+						</ul>
+					</div>
+				</p>
+				<h3>Typed Overloading</h3>
+				<p>The syntax to create a typed overloaded function is similar to that of non-typed but with a little difference in the format of the overloads array. To fully define an overload instnace you'll need two elements of the array , the first one to hold the types list and the one that follows it to hold the function itself.the type list is created through the function <code>types</code></p>
+				<div class="doc">
+					<div class = "doc-header">types</div>
+					<div class = "doc-api">
+						types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
+					</div>
+					<div class="doc-component">
+						<span class = "name">c<sub>i</sub></span>
+						<span class = "type">Function</span>
+						<p><span class = "description">the constructor function of the type (either native or custom)</span></p>
+					</div>
+					<div class = "doc-component">
+						<span class="name">returns</span>
+						<span class="type">_xTypes Object</span>
+						<p><span class="description">the type list object to be passed to <code>Function.create</code></span></p>
+					</div>
+
+				</div>
+				<p></p>
+				<p>For example , to write a type list of a function , a boolean value , an array , a string and finally a number , we write:
+					<pre class="code" id = "code6">
+types(Function , Boolean , Array , String , Number)
+					</pre>
+				</p>
+				<p>A correct-formated overloads array follows this pattern : <b>the type list comes first , then in the next element comes the function associated with that type list (The number of types and the number of paramters in the associated function must be equal)</b>. Note that any overloads array not in this format will throw an error. An example of a typed overloaded function is the <code>add</code> function defined in the following:
+					<pre class="code" id = "code7">
+//a Custom type represnting complex number
+function Complex(r , i) {
+	this.real = r;
+	this.imaginary = i;
+}
+
+var add = Function.create(true , [
+	types(Number,Number) ,
+	function(a , b) {
+		return this.a + this.b;
+	},
+	types(Array , Array),
+	function(A , B) {
+		if(A.length === B.length) {
+			var C = new Array(A.length);
+			for(var i = 0 ; i < A.length ; i++) {
+				C[i] = A[i] + B[i];
+			}
+		}
+	},
+	types(Complex,Complex), //the custom type
+	function(Z , W) {
+		return new Complex(Z.real + W.real , Z.imaginary + W.imaginary);
+	}
+]);
+					</pre>
+				</p>
+				<p>Here , <code>add</code> has three instances , each of which accepts two arguements but with different types. the first one accepts two numbers , the second accepts two arrays and the last one accepts two objects of the type Complex (which is a custom type). Any call to <code>add</code> with an argument list matching a defined instances in both  number and types will work fine. Any call with an argument list that doesn't match any defined instance will throw an error.
+				<pre class="code" id = "code8">
+add(40,89.69); //Ok
+add([1 2 3] , [-1 0 9.678]); //Ok
+add(new Complex(7 , 0) , new Complex(1 , -6)); //Ok
+
+add(80); //Error
+add(80,"Hello"); //Error
+add([1 4 7] , new Complex(7 , 52)); //Error
+				</pre>
+				</p>
+				<p>Like in non-typed overloading , the library provides the constnat <code>xTyped</code> which is equal to <code>true</code> to be passed as the first argument of <code>Function.create</code> indicating a typed overloading mode.
+				<pre class ="code">
+var divide = Function.create(xTyped , [types(Number , Number) , function(a , b) {return a / b;}]);
+				</pre>
+				</p>
+				<p>
+				The following are the categories of types that can automatically be recognized in the typed overloading mode:
+				<ul>
+					<li>Native Types.</li>
+					<li>Any custom type crated through <code>Classing{js}</code> Classes</li>
+					<li>Any custom type that has a constructor of the form</li>
+					<pre class="code">
+function &#60;constructorName&#62;(a,b,c,...){ ... }
+					</pre>
+				</ul>
+				</p>
+				<p>
+					For custom types that has a constructor of the form:
+					<pre class = "code">
+var &#60;constructorName&#62; = function(a,b,c, ...) { ... }
+					</pre>
+				</p>
+				<p>a <b>stamping step</b> must be made before <code>Classing{js}</code> can recognize it. the stamping is done using the function <code>xStamp</code></p>
+				<div class="doc">
+					<div class="doc-header">xStamp</div>
+					<div class="doc-api">xStamp(Constructor)</div>
+					<div class="doc-component">
+						<span class="name">Constructor</span>
+						<span class="type">Function</span>
+						<p><span class="description">the custom constructor function to be stamped</span></p>
+					</div>
+				</div>
+				<p></p>
+				<p>For example:
+					<pre class="code">
+var Human = function(a) {
+	this.age = a;
+}
+xStamp(Human);
+var add = Function.create(xTyped , [
+	types(Human,Human),
+	function(H1,H2) {
+		return new Human(H1.age + H2.age);
+	}
+]);
+
+add(new Human(41) , new Human(16)); //Ok
+					</pre>
+				</p>
+			</div>
+		</div>
+
+
+
+		<script src="../js/jquery-1.10.1.min.js"></script>
+		<script src="../js/jquery-browser.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+
+		<script src="../js/jquery.snippet.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+								
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				})
+
+				/*$("#code1").snippet("javascript" , opts);
+				$("#code1 ul li:last").remove();
+				$("#code2").snippet("javascript" , opts);
+				$("#code2 ul li:last").remove();
+				$("#code3").snippet("javascript" , opts);
+				$("#code3 ul li:last").remove();
+				$("#code4").snippet("javascript" , opts);
+				$("#code4 ul li:last").remove();
+				$("#code5").snippet("javascript" , opts);
+				$("#code5 ul li:last").remove();
+				$("#code6").snippet("javascript" , opts);
+				$("#code6 ul li:last").remove();
+				$("#code7").snippet("javascript" , opts);
+				//$("#code7 ul li:last").remove();
+				$("#code8").snippet("javascript" , opts);
+				$("#code8 ul li:last").remove();*/
+
+			});
+
+		</script>
+	</body>
+</html>
