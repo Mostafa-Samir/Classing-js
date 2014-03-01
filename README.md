@@ -3,6 +3,19 @@ Javascript's prototypal object oriented style, although powerful, is tedious, sp
 from a classical object oriented language like C++, Java or C#.<br/>
 <b>Classing{js}</b> is created to solve this problem by creating a classical-like OOP interface that behaves almost exactly
 like any regular classical object oriented environment.<br/>
+#Features
+<ul>
+<li><p>Typed and non-typed function overloading with the ability to recognize custom types.</p></li>
+<li><p>Creating All types of classes : concrete , final concrete and abstract.</p></li>
+<li><p>Defining components in any of the three access levels : private , protected and public.</p></li>
+<li><p>Defining abstrcat and final methods.</p></li>
+<li><p>Defining static components.</p></li>
+<li><p>Extending any non-final class.</p></li>
+<li><p>Overriding non-final methods in derived classes.</p></li>
+<li><p>Accessing the base class constructor and components through the keyword <code>base</code>.</p></li>
+<li><p>Creating and implemeting mutiple interfaces.</p></li>
+</ul>
+
 Here's an example of what you can do with <b>Classing{js}:</b>
 ``` javascript
 var Shape = Abstract.Class({
