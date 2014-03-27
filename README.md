@@ -39,8 +39,8 @@ var Circle = Class.Extends(Shape)({
     }
 });
 ```
-Visit the the library's <a href="mostafa-samir.github.io/classingjs/">website</a> for more info<br/>
-Start a quick <a href="mostafa-samir.github.io/classingjs/tutorial/">tutorial</a> to learn how to use the library  <br/>
+Visit the the library's <a href="http://mostafa-samir.github.io/classingjs/">website</a> for more info<br/>
+Start a quick <a href="http://mostafa-samir.github.io/classingjs/tutorial/">tutorial</a> to learn how to use the library  <br/>
 Follow <b>Classing{js}</b> on <a href = "https://twitter.com/classing_js">Twitter</a> to keep up with what's new.
 
 ##Your Contributions are Valuable
