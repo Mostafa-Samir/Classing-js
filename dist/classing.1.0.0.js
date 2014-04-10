@@ -1,6 +1,6 @@
 /**
 	Classing{js} : brings the world of classical oop to javascript
-	Version : 1.0.1
+	Version : 1.0.0
 	Developed By : Mostafa Samir
 	
 	Code Licensed Under the MIT License :
@@ -47,7 +47,7 @@ var _instantiateOnce = (function() {
 				},
 				set : function _setter(value) {
 					var c = _setter.caller;
-					if(_setter.caller === Class || _setter.caller === Interface) {
+					if(_setter.caller === Class) {
 						_timestamp = value
 					}
 				}
@@ -67,6 +67,19 @@ Object.defineProperty(window , 'xSelf' , {value : new _instantiateOnce() , writa
 **/
 var base = null;
 
+
+/**
+	xStamp : attaches a timestamp to a constructor function
+			 which is considered an intermidate data to identify instances of this constructor
+	@param {function} Constructor : the constructro function
+**/
+function xStamp(Constructor) {
+	if(typeof Constructor === "function") {
+		Constructor.timestamp = Date.now();
+	}
+}
+
+
 /**
 	xError : a custom error constructor to distinguish the library's errors from native errors
 	@param {String} code : code of the error
@@ -82,51 +95,6 @@ function xError(code , msg) {
 	return err;
 }
 
-/**
-	Object::instanceOf : a custom method that checks if the calling object is an instance of someclass or an interface
-	@param {Function/Object} ancestor : the Class or Interface to be checked against
-	@return {Boolean} : true if the object is instance of the class/intrface specified, false otherwise 
-**/
-Object.defineProperty(Object.prototype , 'instanceOf' ,{ 
-	value : function(ancestor) {
-		var isInstace = false;
-		if(typeof ancestor !== "object") {
-			isInstace = this instanceof ancestor;
-		}
-
-		if(!isInstace) {
-			if(ancestor.timestamp) {
-				var constructor = this.constructor;
-				while(constructor !== "_root_") {
-					if(constructor._metadata._implements["" + ancestor.timestamp]) {
-						isInstace = true;
-						break;
-					}
-					else if(constructor._metadata._extends === ancestor) {
-						isInstace = true;
-						break;
-					}
-					else {
-						constructor = constructor._metadata._extends; //go up the tree
-					}
-				}
-			}
-		}
-
-		return isInstace;
-	},
-	enumerable:false
-});
-/**
-	xStamp : attaches a timestamp to a constructor function
-			 which is considered an intermidate data to identify instances of this constructor
-	@param {function} Constructor : the constructro function
-**/
-function xStamp(Constructor) {
-	if(typeof Constructor === "function") {
-		Constructor.timestamp = Date.now();
-	}
-}
 
 /**
 	_xTypes : a special , limited access type to feed arguments type lists while overloading functions
@@ -412,6 +380,7 @@ Function.create = (function() {
 		}
 	}
 })();
+
 /**
 	Interface : creates an interface (a structure that contains only public abstract methods to be implemented by a class or more)
 	@param {defintion} : the definition of the interface
@@ -421,8 +390,6 @@ Function.create = (function() {
 function Interface(defintion) {
 
 	var abstracts = {};
-
-	var reservedTimestamp = xSelf.timestamp;
 
 	for(key in defintion) {
 		var currentComponent = defintion[key];
@@ -462,15 +429,13 @@ function Interface(defintion) {
 
 	}
 
-	xSelf.timestamp = Date.now() + 1;
-
 	var InterfaceObject = new Object();
 	Object.defineProperty(InterfaceObject , 'components' , {value : abstracts , writable:false});
 	Object.defineProperty(InterfaceObject , 'isInterface' , {value : true , writable:false});
-	Object.defineProperty(InterfaceObject , 'timestamp' , {value: reservedTimestamp, writable:false});
 
 	return InterfaceObject;
 }
+
 /**
 	*xAreCompatiable : checks if an implementation of an abstract method matches the description of the previosly defined abstract method
 	@param {Object} abstractRecord : the record that holds the description of the abstract method
@@ -848,8 +813,6 @@ var Class = (function() {
 				proprties : {},
 				attributes : {},
 				abstracts:null,
-				_implements:{},
-				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent
 			}
 
 			var _staticProprties = {};
@@ -863,7 +826,6 @@ var Class = (function() {
 				var len = classProprties.interfaces.length;
 				for(var i = 0 ; i < len ; i++) {
 					var currentInterface = classProprties.interfaces[i];
-					_metadata_._implements["" + currentInterface.timestamp] = true;
 					for(record in currentInterface.components) {
 						_ancestorsAbstracts[record] = currentInterface.components[record];
 					}
