@@ -8,6 +8,8 @@ function Interface(defintion) {
 
 	var abstracts = {};
 
+	var reservedTimestamp = xSelf.timestamp;
+
 	for(key in defintion) {
 		var currentComponent = defintion[key];
 		if(typeof currentComponent !== "function") {
@@ -46,9 +48,12 @@ function Interface(defintion) {
 
 	}
 
+	xSelf.timestamp = Date.now() + 1;
+
 	var InterfaceObject = new Object();
 	Object.defineProperty(InterfaceObject , 'components' , {value : abstracts , writable:false});
 	Object.defineProperty(InterfaceObject , 'isInterface' , {value : true , writable:false});
+	Object.defineProperty(InterfaceObject , 'timestamp' , {value: reservedTimestamp, writable:false});
 
 	return InterfaceObject;
 }

@@ -375,6 +375,8 @@ var Class = (function() {
 				proprties : {},
 				attributes : {},
 				abstracts:null,
+				_implements:{},
+				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent
 			}
 
 			var _staticProprties = {};
@@ -388,6 +390,7 @@ var Class = (function() {
 				var len = classProprties.interfaces.length;
 				for(var i = 0 ; i < len ; i++) {
 					var currentInterface = classProprties.interfaces[i];
+					_metadata_._implements["" + currentInterface.timestamp] = true;
 					for(record in currentInterface.components) {
 						_ancestorsAbstracts[record] = currentInterface.components[record];
 					}

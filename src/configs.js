@@ -17,7 +17,7 @@ var _instantiateOnce = (function() {
 				},
 				set : function _setter(value) {
 					var c = _setter.caller;
-					if(_setter.caller === Class) {
+					if(_setter.caller === Class || _setter.caller === Interface) {
 						_timestamp = value
 					}
 				}
@@ -51,3 +51,39 @@ function xError(code , msg) {
 
 	return err;
 }
+
+/**
+	Object::instanceOf : a custom method that checks if the calling object is an instance of someclass or an interface
+	@param {Function/Object} ancestor : the Class or Interface to be checked against
+	@return {Boolean} : true if the object is instance of the class/intrface specified, false otherwise 
+**/
+Object.defineProperty(Object.prototype , 'instanceOf' ,{ 
+	value : function(ancestor) {
+		var isInstace = false;
+		if(typeof ancestor !== "object") {
+			isInstace = this instanceof ancestor;
+		}
+
+		if(!isInstace) {
+			if(ancestor.timestamp) {
+				var constructor = this.constructor;
+				while(constructor !== "_root_") {
+					if(constructor._metadata._implements["" + ancestor.timestamp]) {
+						isInstace = true;
+						break;
+					}
+					else if(constructor._metadata._extends === ancestor) {
+						isInstace = true;
+						break;
+					}
+					else {
+						constructor = constructor._metadata._extends; //go up the tree
+					}
+				}
+			}
+		}
+
+		return isInstace;
+	},
+	enumerable:false
+});
