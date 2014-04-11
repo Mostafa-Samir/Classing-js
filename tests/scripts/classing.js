@@ -47,7 +47,7 @@ var _instantiateOnce = (function() {
 				},
 				set : function _setter(value) {
 					var caller = _setter.caller;
-					if(caller === Class ||caller === Interface || callr === xStamp) {
+					if(caller === Class ||caller === Interface || caller === xStamp) {
 						_stamp = value
 					}
 				}
