@@ -329,7 +329,7 @@ var Class = (function() {
 
 	 return function (definition) {
 		var _reservedTimestamp = xSelf.timestamp;
-		xSelf.timestamp = Date.now() + 1;
+		xSelf.timestamp++;
 		/**
 		* Level 0 Validation : Validating the definition.
 		* Validation Rule :

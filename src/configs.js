@@ -5,7 +5,7 @@
 var _instantiateOnce = (function() {
 	var flag = false;
 	return function() {
-		var _timestamp = Date.now();
+		var _stamp = 1010;
 		if(flag) {
 			throw xError("000" , "not allowed");
 		}
@@ -13,12 +13,12 @@ var _instantiateOnce = (function() {
 			flag = true;
 			Object.defineProperty(this , 'timestamp' , {
 				get : function() {
-					return _timestamp;
+					return _stamp;
 				},
 				set : function _setter(value) {
-					var c = _setter.caller;
-					if(_setter.caller === Class || _setter.caller === Interface) {
-						_timestamp = value
+					var caller = _setter.caller;
+					if(caller === Class || caller === Interface || caller === xStamp) {
+						_stamp = value
 					}
 				}
 			});

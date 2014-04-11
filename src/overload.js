@@ -5,7 +5,8 @@
 **/
 function xStamp(Constructor) {
 	if(typeof Constructor === "function") {
-		Constructor.timestamp = Date.now();
+		Constructor.timestamp = xSelf.timestamp;
+		xSelf.timestamp++;
 	}
 }
 

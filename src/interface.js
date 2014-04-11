@@ -9,6 +9,7 @@ function Interface(defintion) {
 	var abstracts = {};
 
 	var reservedTimestamp = xSelf.timestamp;
+	xSelf.timestamp++;
 
 	for(key in defintion) {
 		var currentComponent = defintion[key];
@@ -47,8 +48,6 @@ function Interface(defintion) {
 		}
 
 	}
-
-	xSelf.timestamp = Date.now() + 1;
 
 	var InterfaceObject = new Object();
 	Object.defineProperty(InterfaceObject , 'components' , {value : abstracts , writable:false});
