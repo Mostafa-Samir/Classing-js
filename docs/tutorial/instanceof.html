@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/docs-style.css">
+		<title>Tutorial : Object::instanceOf</title>
+	</head>
+
+	<body>
+		<div class="hero-unit">
+			<h3>Classing{js} Tutorial</h3>
+			<h1>Object::instanceOf</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li><a href="../index.html">API Summery</a></li>
+					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="overload.html">Function Overloading</a></li>
+					<li><a href="classes.html">Creating Classes</a></li>
+					<li><a href="inheritance.html">Inheritance</a></li>
+					<li><a href="abstract.html">Abstract Classes</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+					<li class="active"><a href="instanceof.html">Object::instanceOf</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<h3>Why a new instaceOf ?</h3>
+				<p>With <code>Classing{js}</code> and its ability to make a class implements multiple interfaces in addition to inheriting a class, the ordinary <code>instanceof</code> operator of javascript became limited as it cannot check if a class is an instance of an interface that is implemented by it. To solve this issue, the library provides a custom method called <code>instanceOf</code> that gets attached to every object you create and has the ability to check if this object is an instance of a class or an interface in any level in the ancstors tree.</p>
+				<p>It's extremly simple to use , just call <code>yourObject.instanceOf(ancestor)</code> and it will return true if your object is an instance of that ancestor, or false otherwise.</p>
+				<p>Here's an exmaple that will make things even clearer:</p>
+				<pre class="code">
+var Identifiable = Interface({
+	getIdentified: function(){}
+});
+
+var IPayable = Interface({
+	getPaid : function(){}
+});
+
+var Person = Class.Implements(Identifiable)({
+	private : {
+		id : null,
+	},
+	protected : {
+		name : null,
+		age : null,
+	},
+	public : {
+		Construct : Function.create(xTyped , [
+			types(),
+			function() {
+				this.id = Date.now();
+			},
+			types(String , Number),
+			function(str , num) {
+				this.name = str;
+				this.age = num;
+				this.id = Date.now();
+			}
+		]),
+		getIdentified : function() { return this.id; }
+	}
+});
+
+var Employee = Class.Extends(Person).Implements(IPayable)({
+	protected : {
+		salary : 5000,
+		balance : 0
+	},
+	public : {
+		getPaid : function() {
+			this.balance += this.salary;
+		}
+	}
+});
+
+var emp1 = new Empolyee();
+
+emp1.instanceOf(Empolyee); //true
+emp1.instanceOf(IPayable); //true
+emp1.instanceOf(Person); //true
+emp1.instanceOf(Identifiable); //true
+emp1.instanceOf(Object); //true
+emp1.instsnceOf(Array); //false
+				</pre>
+			</div>
+		</div>
+		
+		<script src="../js/jquery-1.10.1.min.js"></script>
+		<script src="../js/jquery-browser.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap-tabs.js"></script>
+		<script src="../js/bootstrap-tooltip.js"></script>
+		<script src="../js/bootstrap-popover.js"></script>
+		<script src="../js/jquery.snippet.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				});
+
+				$("#reach").popover({
+					title : "Reach on ...",
+					html : true,
+					content : "<a href = 'https://twitter.com/M0stafa_Samir' target='_blank'><img src = '../img/twt.png'/></a> <a href='https://plus.google.com/118407779001911549517' target='_blank'><img src = '../img/gp.png'/></a> <a href='http://www.linkedin.com/pub/mostafa-samir/7a/811/a7a' target='_blank'><img src = '../img/in.png'/></a>",
+					placement : "right",
+					trigger : 'click'
+				});
+			});
+		</script>
+	</body>
+</html>

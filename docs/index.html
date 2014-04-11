@@ -43,6 +43,7 @@
 						<li class="tabbed"><a href="#extends">Class.Extends</a></li>
 						<li class="tabbed"><a href="#interface">Interface</a></li>
 						<li class="tabbed"><a href="#implements">Class.Implements</a></li>
+						<li class="tabbed"><a href="#instanceof">Object::instanceOf</a></li>
 					<li><a href = "tutorial/overload.html">Detailed Tutorial</a></li>
 				</ul>
 			</div>
@@ -416,7 +417,7 @@ var IPayable = Interface({
 								<p><span class="description">an interface to be implemented.</span></p>
 							</div>
 							<div class="doc-component">
-								<span class="name">returns</sub></span>
+								<span class="name">returns</span>
 								<span class="type">Function</span>
 								<p><span class="description">The <a href="#class">Class</a> function.</span></p>
 							</div>
@@ -431,6 +432,43 @@ var IPayable = Interface({
 var Employee = Class.Implements(IPayable)({
 	public: {getPaid : function(){return "$5000.00"}}
 })
+						</pre>
+					</div>
+				</div>
+				<!-- End of the row-->
+				<hr/>
+				<div class="row-fluid" id="instanceof">
+					<div class="span6">
+						<div class="doc">
+							<div class="doc-header">Object::instanceOf</div>
+							<div class="doc-api">Object::instanceOf(ancestor)</div>
+							<div class="doc-component">
+								<span class="name">ancestor</span>
+								<span class="type">Function/Object</span>
+								<p><span class="description">The Class or Interface to check if the object is instance of it.</span></p>
+							</div>
+							<div class="doc-component">
+								<span class="name">returns</span>
+								<span class="type">Boolean</span>
+								<p><span class="description">true of the object is instance of ancstor. false otherwise.</span></p>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<h4>Notes:</h4>
+						<li>All instances of <code>Object</code> (which is exaclty every object you make) will have the <code>instanceOf</code> method.</li>
+						<h4>Eaxmple:</h4>
+						<pre class="code">
+var IVoid = Interface({ func : function(){} });
+var Parent = Class({});
+var Child = Class.Extends(Parent).Implements(IVoid)({
+	public : { func : function(){return "void";} }
+});
+var obj = new Child();
+obj.instanceOf(Child); //true
+obj.instanceOf(Parent); //true
+obj.instanceOf(IVoid); //true;
+obj.instanceOf(Object); //true; 
 						</pre>
 					</div>
 				</div>
