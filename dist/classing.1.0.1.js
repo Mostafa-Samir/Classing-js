@@ -35,7 +35,7 @@
 var _instantiateOnce = (function() {
 	var flag = false;
 	return function() {
-		var _timestamp = Date.now();
+		var _stamp = 1010;
 		if(flag) {
 			throw xError("000" , "not allowed");
 		}
@@ -43,12 +43,12 @@ var _instantiateOnce = (function() {
 			flag = true;
 			Object.defineProperty(this , 'timestamp' , {
 				get : function() {
-					return _timestamp;
+					return _stamp;
 				},
 				set : function _setter(value) {
-					var c = _setter.caller;
-					if(_setter.caller === Class || _setter.caller === Interface) {
-						_timestamp = value
+					var caller = _setter.caller;
+					if(caller === Class ||caller === Interface || caller === xStamp) {
+						_stamp = value
 					}
 				}
 			});
@@ -124,7 +124,8 @@ Object.defineProperty(Object.prototype , 'instanceOf' ,{
 **/
 function xStamp(Constructor) {
 	if(typeof Constructor === "function") {
-		Constructor.timestamp = Date.now();
+		Constructor.timestamp = xSelf.timestamp;
+		xSelf.timestamp++;
 	}
 }
 
@@ -423,6 +424,7 @@ function Interface(defintion) {
 	var abstracts = {};
 
 	var reservedTimestamp = xSelf.timestamp;
+	xSelf.timestamp++
 
 	for(key in defintion) {
 		var currentComponent = defintion[key];
@@ -462,8 +464,6 @@ function Interface(defintion) {
 
 	}
 
-	xSelf.timestamp = Date.now() + 1;
-
 	var InterfaceObject = new Object();
 	Object.defineProperty(InterfaceObject , 'components' , {value : abstracts , writable:false});
 	Object.defineProperty(InterfaceObject , 'isInterface' , {value : true , writable:false});
@@ -471,6 +471,7 @@ function Interface(defintion) {
 
 	return InterfaceObject;
 }
+
 /**
 	*xAreCompatiable : checks if an implementation of an abstract method matches the description of the previosly defined abstract method
 	@param {Object} abstractRecord : the record that holds the description of the abstract method
@@ -802,7 +803,7 @@ var Class = (function() {
 
 	 return function (definition) {
 		var _reservedTimestamp = xSelf.timestamp;
-		xSelf.timestamp = Date.now() + 1;
+		xSelf.timestamp++;
 		/**
 		* Level 0 Validation : Validating the definition.
 		* Validation Rule :
