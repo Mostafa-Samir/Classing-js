@@ -351,7 +351,8 @@ var Class = (function() {
 				parent : Class.options.parent === null ? xEmptyParent : Class.options.parent,
 				interfaces : Class.options.interfaces,
 				timestamp : _reservedTimestamp,
-				hasProtectedStatics : false
+				constructorAccessLevel : "public"
+
 			};
 
 			//resetting class options
@@ -375,8 +376,9 @@ var Class = (function() {
 				proprties : {},
 				attributes : {},
 				abstracts:null,
+				constructorAccessLevel: "public",
 				_implements:{},
-				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent
+				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent,
 			}
 
 			var _staticProprties = {};
@@ -427,10 +429,13 @@ var Class = (function() {
 							if(currentModifier[key].isAbstract) {
 								throw xError("214" , "a constructor cannot be abstract");
 							}
+							classProprties.constructorAccessLevel = modifier;
+							_metadata_.constructorAccessLevel = modifier;
 							constructor = currentModifier[key];
 							currentModifier[key].privliagedMark = _reservedTimestamp + ":" + _methodMarkerCounter;
 							_privliagedDictionary[_reservedTimestamp + ":" + _methodMarkerCounter] = true;
 							_methodMarkerCounter++;
+
 							continue;
 						}
 						//Checking if the method is overriding an inherited method
@@ -468,7 +473,7 @@ var Class = (function() {
 						}
 						//if the method is not abstrcat 
 						else {
-							//Marking the method as privliaged to access the private/protceted statics
+							//Marking the method as privliaged to access the private/protected statics
 							currentModifier[key].privliagedMark = _reservedTimestamp + ":" + _methodMarkerCounter;
 							_privliagedDictionary[_reservedTimestamp + ":" + _methodMarkerCounter] = true;
 							_methodMarkerCounter++;
@@ -637,6 +642,7 @@ var Class = (function() {
 						$this._super = new Object();
 					}
 				}
+				base.isBase = true;
 
 				constructor.apply($this , args);
 
@@ -647,7 +653,7 @@ var Class = (function() {
 						}
 						else {
 							try {
-								if(classProprties.parent.isAbstract) {
+								if(classProprties.parent.isAbstract || classProprties.parent._metadata.constructorAccessLevel === "protected") {
 									$this._super = theEYE(1 , classProprties.parent , []);
 								}
 								else {
@@ -655,7 +661,10 @@ var Class = (function() {
 								}
 							}
 							catch(ex) {
-								throw xError("210","parent class doesn't contain a default constructor");
+								if(ex.code !== 212) {
+									throw xError("210","parent class doesn't contain a default constructor");
+								}
+								throw ex;
 							}
 						}
 					}
@@ -671,6 +680,13 @@ var Class = (function() {
                 }
 
 				var _classPattern = function() {
+
+					var instantiator = _classPattern.caller;
+					var pMark = !instantiator.isBase ? (instantiator.privliagedMark ? instantiator.privliagedMark : "") : instantiator.caller.privliagedMark;
+
+					if(classProprties.constructorAccessLevel !== "public" && instantiator !== theEYE && !_privliagedDictionary[pMark] && !(_privliagedChilds[pMark] && classProprties.constructorAccessLevel === "protected")) {
+						throw xError("212" , "inaccessable constructor");
+					}
 
 					if(classProprties.isAbstract && _classPattern.caller !== theEYE) {
 						throw xError("211","Cannot instantiate an abstract class");
@@ -770,7 +786,7 @@ var Class = (function() {
 						case "protected":
 							xDefineIn(_classPattern , 'protected-static' , key , {
 								own : _privliagedDictionary,
-								child : _privliagedChilds,
+								childs : _privliagedChilds,
 								loc : definition[accotiatedAccessLevel]
 							});break;
 						case "private" :
