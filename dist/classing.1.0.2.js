@@ -1,6 +1,6 @@
 /**
 	Classing{js} : brings the world of classical oop to javascript
-	Version : 1.0.1
+	Version : 1.0.2
 	Developed By : Mostafa Samir
 	
 	Code Licensed Under the MIT License :
@@ -26,8 +26,6 @@
 	THE SOFTWARE.
 	
 **/
-
-
 /**
 	* _instantiateOnce : a constructor function that is can be used only once to create
 						 the xSelf constant
@@ -47,7 +45,7 @@ var _instantiateOnce = (function() {
 				},
 				set : function _setter(value) {
 					var caller = _setter.caller;
-					if(caller === Class ||caller === Interface || caller === xStamp) {
+					if(caller === Class || caller === Interface || caller === xStamp) {
 						_stamp = value
 					}
 				}
@@ -424,7 +422,7 @@ function Interface(defintion) {
 	var abstracts = {};
 
 	var reservedTimestamp = xSelf.timestamp;
-	xSelf.timestamp++
+	xSelf.timestamp++;
 
 	for(key in defintion) {
 		var currentComponent = defintion[key];
@@ -471,7 +469,6 @@ function Interface(defintion) {
 
 	return InterfaceObject;
 }
-
 /**
 	*xAreCompatiable : checks if an implementation of an abstract method matches the description of the previosly defined abstract method
 	@param {Object} abstractRecord : the record that holds the description of the abstract method
@@ -825,7 +822,8 @@ var Class = (function() {
 				parent : Class.options.parent === null ? xEmptyParent : Class.options.parent,
 				interfaces : Class.options.interfaces,
 				timestamp : _reservedTimestamp,
-				hasProtectedStatics : false
+				constructorAccessLevel : "public"
+
 			};
 
 			//resetting class options
@@ -849,8 +847,9 @@ var Class = (function() {
 				proprties : {},
 				attributes : {},
 				abstracts:null,
+				constructorAccessLevel: "public",
 				_implements:{},
-				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent
+				_extends:classProprties.parent === xEmptyParent ? "_root_" : classProprties.parent,
 			}
 
 			var _staticProprties = {};
@@ -901,10 +900,13 @@ var Class = (function() {
 							if(currentModifier[key].isAbstract) {
 								throw xError("214" , "a constructor cannot be abstract");
 							}
+							classProprties.constructorAccessLevel = modifier;
+							_metadata_.constructorAccessLevel = modifier;
 							constructor = currentModifier[key];
 							currentModifier[key].privliagedMark = _reservedTimestamp + ":" + _methodMarkerCounter;
 							_privliagedDictionary[_reservedTimestamp + ":" + _methodMarkerCounter] = true;
 							_methodMarkerCounter++;
+
 							continue;
 						}
 						//Checking if the method is overriding an inherited method
@@ -942,7 +944,7 @@ var Class = (function() {
 						}
 						//if the method is not abstrcat 
 						else {
-							//Marking the method as privliaged to access the private/protceted statics
+							//Marking the method as privliaged to access the private/protected statics
 							currentModifier[key].privliagedMark = _reservedTimestamp + ":" + _methodMarkerCounter;
 							_privliagedDictionary[_reservedTimestamp + ":" + _methodMarkerCounter] = true;
 							_methodMarkerCounter++;
@@ -1111,6 +1113,7 @@ var Class = (function() {
 						$this._super = new Object();
 					}
 				}
+				base.isBase = true;
 
 				constructor.apply($this , args);
 
@@ -1121,7 +1124,7 @@ var Class = (function() {
 						}
 						else {
 							try {
-								if(classProprties.parent.isAbstract) {
+								if(classProprties.parent.isAbstract || classProprties.parent._metadata.constructorAccessLevel === "protected") {
 									$this._super = theEYE(1 , classProprties.parent , []);
 								}
 								else {
@@ -1129,7 +1132,10 @@ var Class = (function() {
 								}
 							}
 							catch(ex) {
-								throw xError("210","parent class doesn't contain a default constructor");
+								if(ex.code !== 212) {
+									throw xError("210","parent class doesn't contain a default constructor");
+								}
+								throw ex;
 							}
 						}
 					}
@@ -1145,6 +1151,13 @@ var Class = (function() {
                 }
 
 				var _classPattern = function() {
+
+					var instantiator = _classPattern.caller;
+					var pMark = !instantiator.isBase ? (instantiator.privliagedMark ? instantiator.privliagedMark : "") : instantiator.caller.privliagedMark;
+
+					if(classProprties.constructorAccessLevel !== "public" && instantiator !== theEYE && !_privliagedDictionary[pMark] && !(_privliagedChilds[pMark] && classProprties.constructorAccessLevel === "protected")) {
+						throw xError("212" , "inaccessable constructor");
+					}
 
 					if(classProprties.isAbstract && _classPattern.caller !== theEYE) {
 						throw xError("211","Cannot instantiate an abstract class");
@@ -1244,7 +1257,7 @@ var Class = (function() {
 						case "protected":
 							xDefineIn(_classPattern , 'protected-static' , key , {
 								own : _privliagedDictionary,
-								child : _privliagedChilds,
+								childs : _privliagedChilds,
 								loc : definition[accotiatedAccessLevel]
 							});break;
 						case "private" :
