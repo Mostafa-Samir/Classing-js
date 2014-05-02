@@ -16,32 +16,15 @@ like any regular classical object oriented environment.<br/>
 <li><p>Creating and implemeting mutiple interfaces.</p></li>
 </ul>
 
-
-Here's an example of what you can do with <b>Classing{js}:</b>
-``` javascript
-var Shape = Abstract.Class({
-    public : {
-        Area : Abstract(function(){}),
-        Circumference : Abstract(function(){})
-    }
-});
-var Circle = Class.Extends(Shape)({
-    private : {
-        raduis : null
-    },
-    public : {
-        Radius : {
-            get : function(){return this.raduis},
-            set : function(value){this.raduis = value}
-        },
-        Area : function() {return Math.PI*this.raduis*this.raduis;},
-        Circumference : function(){return 2*Math.PI*this.raduis;}
-    }
-});
-```
 Visit the the library's <a href="http://mostafa-samir.github.io/classingjs/">website</a> for more info<br/>
 Start a quick <a href="http://mostafa-samir.github.io/classingjs/tutorial/">tutorial</a> to learn how to use the library  <br/>
 Follow <b>Classing{js}</b> on <a href = "https://twitter.com/classing_js">Twitter</a> to keep up with what's new.
+
+<br/>
+Take a look of what you can do with <b>Classing{js}:</b>
+![alt tag](http://mostafa-samir.github.io/classingjs/others/screenshot1.png "Employee")
+![alt tag](http://mostafa-samir.github.io/classingjs/others/screenshot2.PNG "Singleton")
+
 
 ##Your Contributions are Valuable
 There's a lot more to be done in <b>Classing{js}</b>, and your contribution will certailny help acheving this whether it is:
