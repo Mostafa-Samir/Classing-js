@@ -1,6 +1,6 @@
 test("Private Constructors" , function() {
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			private:{
 				Construct : function(){}
 			}
@@ -12,13 +12,13 @@ test("Private Constructors" , function() {
 	}, "instantiating a class with a private constructor threw an error[code:212]");
 
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			private : {
 				Construct : function(){}
 			}
 		});
 
-		var SubC = Class.Extends(C)({})
+		var SubC = classing.Class.Extends(C)({})
 
 		var obj = new SubC();
 	}, function(err) {
@@ -26,13 +26,13 @@ test("Private Constructors" , function() {
 	}, "implicit calling of private parent constructor threw an error[code:212]");
 
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			private: {
 				Construct : function(){}
 			}
 		});
 
-		var SubC = Class.Extends(C)({
+		var SubC = classing.Class.Extends(C)({
 			public : {
 				Construct : function() {
 					base();
@@ -45,7 +45,7 @@ test("Private Constructors" , function() {
 		return err.code === 212;
 	}, "explicit calling of private parent constructor threw an error[code:212]");
 
-	var C = Class({
+	var C = classing.Class({
 		private : {
 			Construct : function(){}
 		},
@@ -61,7 +61,7 @@ test("Private Constructors" , function() {
 
 test("Protected Constructors" , function(){
 	throws(function() {
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				Construct : function(){}
 			}
@@ -72,17 +72,17 @@ test("Protected Constructors" , function(){
 		return err.code === 212;
 	}, "instantiating a class with a protected constructor threw an error[code:212]");
 
-	var C = Class({
+	var C = classing.Class({
 		protected : {
 			Construct : function() {}
 		}
 	});
 
-	var SubC = Class.Extends(C)({});
+	var SubC = classing.Class.Extends(C)({});
 	var obj = new SubC();
 	ok(true , "implicit calling of protected parent constructor threw no errors");
 
-	var SubC2 = Class.Extends(C)({
+	var SubC2 = classing.Class.Extends(C)({
 		public: {
 			Construct : function() {
 				base();
@@ -92,7 +92,7 @@ test("Protected Constructors" , function(){
 	var obj2 = new SubC2();
 	ok(true , "explicit calling of protected parent constructor threw no errors");
 
-	var C2 = Class({
+	var C2 = classing.Class({
 		protected : {
 			Construct : function(){}
 		},

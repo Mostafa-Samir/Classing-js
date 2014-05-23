@@ -1,11 +1,11 @@
 test("instanceOf of Own and Parent Classes" , function(){
-	var GreatGrandParent = Class({});
-	var GrandParent = Class.Extends(GreatGrandParent)({});
-	var Parent = Class.Extends(GrandParent)({});
-	var Child = Class.Extends(Parent)({});
-	var GrandChild = Class.Extends(Child)({})
+	var GreatGrandParent = classing.Class({});
+	var GrandParent = classing.Class.Extends(GreatGrandParent)({});
+	var Parent = classing.Class.Extends(GrandParent)({});
+	var Child = classing.Class.Extends(Parent)({});
+	var GrandChild = classing.Class.Extends(Child)({})
 
-	var OtherClass = Class.Extends(Parent)({});
+	var OtherClass = classing.Class.Extends(Parent)({});
 
 	var obj = new Child();
 
@@ -19,13 +19,13 @@ test("instanceOf of Own and Parent Classes" , function(){
 });
 
 test("instanceOf direct implemented interfaces" , function(){
-	var I1 = Interface({ func1 : function(){} });
-	var I2 = Interface({ func2 : function(){} });
-	var I3 = Interface({ func3 : function(){} });
+	var I1 = classing.Interface({ func1 : function(){} });
+	var I2 = classing.Interface({ func2 : function(){} });
+	var I3 = classing.Interface({ func3 : function(){} });
 
-	var IOther = Interface({ func: function(){} });
+	var IOther = classing.Interface({ func: function(){} });
 
-	var Child = Class.Implements(I1, I2, I3)({
+	var Child = classing.Class.Implements(I1, I2, I3)({
 		public : {
 			func1 : function(){},
 			func2 : function(){},
@@ -42,14 +42,14 @@ test("instanceOf direct implemented interfaces" , function(){
 });
 
 test("instanceOf indirect implemented interfaces" , function() {
-	var I1 = Interface({ func: function(){} });
-	var Parent = Class.Implements(I1)({
+	var I1 = classing.Interface({ func: function(){} });
+	var Parent = classing.Class.Implements(I1)({
 		public: {
 			func: function(){}
 		}
 	});
-	var Child = Class.Extends(Parent)({});
-	var GrandChild = Class.Extends(Child)({});
+	var Child = classing.Class.Extends(Parent)({});
+	var GrandChild = classing.Class.Extends(Child)({});
 
 	var obj1 = new Child();
 	var obj2 = new GrandChild();

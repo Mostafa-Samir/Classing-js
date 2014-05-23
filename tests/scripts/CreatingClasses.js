@@ -2,7 +2,7 @@ module("Vaild Definitons");
 test("Concrete Classes" , function() {
 
 	/* Begin Test 1 */
-	var Person = Class({
+	var Person = classing.Class({
 		private : {
 			name : null,
 			age : null,
@@ -24,7 +24,7 @@ test("Concrete Classes" , function() {
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var House = Class({
+	var House = classing.Class({
 		private : {
 			height : null,
 			width : null,
@@ -43,7 +43,7 @@ test("Concrete Classes" , function() {
 	/* End Test 2 */
 
 	/* Begin Test 3 */
-	var Car = Final.Class({
+	var Car = classing.Final.Class({
 		private : {
 			model : null,
 		},
@@ -61,7 +61,7 @@ test("Concrete Classes" , function() {
 test("Abstract Classes" , function(){
 
 	/* Begin Test 1 */
-	var Shape = Abstract.Class({
+	var Shape = classing.Abstract.Class({
 		protected : {
 			edge : null
 		},
@@ -73,7 +73,7 @@ test("Abstract Classes" , function(){
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var Point = Class({
+	var Point = classing.Class({
 		private : {
 			_x : null,
 			_y : null,
@@ -95,7 +95,7 @@ test("Abstract Classes" , function(){
 			}
 		}
 	});
-	var Metric = Abstract.Class({
+	var Metric = classing.Abstract.Class({
 		protected : {
 			rule : null
 		},
@@ -110,7 +110,7 @@ test("Abstract Classes" , function(){
 	/* End Test 2 */
 
 	/* Begin Test 2 */
-	var Empty = Class({});
+	var Empty = classing.Class({});
 	ok(true , "Class Defined : no errors were thrown");
 	/* End Test 3 */
 });
@@ -119,7 +119,7 @@ module("Invalid Definitons");
 test("Inavlid Argument", function(){
 	/* Begin Test 1 */
 	throws(function() {
-		var C = Class(function() {
+		var C = classing.Class(function() {
 			var b = 50;
 			this.B = function() {
 				return b;
@@ -132,7 +132,7 @@ test("Inavlid Argument", function(){
 
 	/* Begin Test 2 */
 	throws(function() {
-		var C = Class("INVALID");
+		var C = classing.Class("INVALID");
 	} , function(err) {
 		return err.code === 201
 	} , "a string sent instead of object : an error [code:201] was thrown");
@@ -143,7 +143,7 @@ test("Unallowed Access Modifiers" , function(){
 
 	/* Begin Test 1 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			public :{},
 			protected: {},
 			private : {},
@@ -156,7 +156,7 @@ test("Unallowed Access Modifiers" , function(){
 
 	/* Begin Test 2 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			static :{},
 			public : {}
 		});
@@ -169,7 +169,7 @@ test("Unallowed Access Modifiers" , function(){
 test("Setting non-static attributes to objects" , function() {
 	/* Begin Test 1 */
 	throws(function() {
-		var Matrix = Class({
+		var Matrix = classing.Class({
 			private : {
 				internal : new Array(),
 			}
@@ -181,7 +181,7 @@ test("Setting non-static attributes to objects" , function() {
 
 	/* Begin Test 2 */
 	throws(function() {
-		var Human = Class({
+		var Human = classing.Class({
 			protected : {
 				genes : {}
 			}
@@ -193,7 +193,7 @@ test("Setting non-static attributes to objects" , function() {
 
 	/* Begin Test 3 */
 	throws(function() {
-		var Test = Class({
+		var Test = classing.Class({
 			public : {
 				Standards : new Object()
 			}
@@ -208,7 +208,7 @@ test("Duplicate component name" , function() {
 
 	/* Begin Test 1 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			private : {
 				x : function(){}
 			},
@@ -223,7 +223,7 @@ test("Duplicate component name" , function() {
 
 	/* Begin Test 2 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				constructor : function(){}
 			},
@@ -238,7 +238,7 @@ test("Duplicate component name" , function() {
 
 	/* Begin Test 2 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				func : function(a){return a}
 			},
@@ -255,7 +255,7 @@ test("Duplicate component name" , function() {
 test("Marking a function that has a body as abstract" , function() {
 	/* Begin Test 1 */
 	throws(function() {
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				cFunc : Abstract(function() {return "Void"})
 			}
@@ -267,7 +267,7 @@ test("Marking a function that has a body as abstract" , function() {
 
 	/* Begin Test 2 */
 	throws(function() {
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				cFunc : Abstract(function Hello() {return "Void"})
 			}
@@ -279,7 +279,7 @@ test("Marking a function that has a body as abstract" , function() {
 
 	/* Begin Test 3 */
 	throws(function() {
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				cFunc : Abstract(xTyped , [
 					types(Number),
@@ -296,7 +296,7 @@ test("Marking a function that has a body as abstract" , function() {
 
 	/* Begin Test 4 */
 	throws(function() {
-		var C = Class({
+		var C = classing.Class({
 			protected : {
 				cFunc : Abstract(xNonTyped , [
 					function(a){},
@@ -315,7 +315,7 @@ test("Marking a final function abstract" , function(){
 
 	/* Begin Test 1 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			public : {
 				cFunc : Abstract(Final(function(){}))
 			}
@@ -329,7 +329,7 @@ test("Marking a final function abstract" , function(){
 test("Marking an abstract function as final" , function(){
 	/* Begin Test 1 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			public : {
 				cFunc : Final(Abstract(function(){}))
 			}
@@ -346,7 +346,7 @@ test("Marking a private method abstract" , function() {
 
 	/* Begin Test 1 */
 	throws(function(){
-		var C = Class({
+		var C = classing.Class({
 			private : {
 				cFunc : Abstract(function(){})
 			}

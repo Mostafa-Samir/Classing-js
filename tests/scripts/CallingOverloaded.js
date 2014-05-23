@@ -24,7 +24,7 @@ function Complex(re , img ) {
 var Human = function(a) {
 	this.age = a;
 }
-xStamp(Human);
+classing.xStamp(Human);
 
 //The typed overloaded testing function
 var Add = Function.create(xTyped , [

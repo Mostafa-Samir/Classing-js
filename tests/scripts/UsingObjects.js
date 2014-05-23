@@ -1,4 +1,4 @@
-var Creature = Class({
+var Creature = classing.Class({
 	private : {
 		counter : Static(0),
 		species : null,
@@ -68,7 +68,7 @@ var Creature = Class({
 	}
 });
 
-var abstractClass = Abstract.Class({
+var abstractClass = classing.Abstract.Class({
 	public : {
 		abstractMethod : Abstract(function(){})
 	}

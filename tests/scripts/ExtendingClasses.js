@@ -1,21 +1,21 @@
 test("Valid Extensions" , function() {
 	/* Begin Test 1 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		protected : {
 			pVal : "Hello"
 		}
 	}); 
-	var Child = Class.Extends(Parent)({});
+	var Child = classing.Class.Extends(Parent)({});
 	ok(true , "a concrete class extinstion is made. No errors thrown");
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var Parent = Abstract.Class({
+	var Parent = classing.Abstract.Class({
 		protected : {
 			abstractMethod : Abstract(function(){})
 		}
 	}); 
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		protected : {
 			abstractMethod : function(){return "Void";}
 		}
@@ -24,12 +24,12 @@ test("Valid Extensions" , function() {
 	/* End Test 2 */
 
 	/* Begin Test 3 */
-	var Parent = Abstract.Class({
+	var Parent = classing.Abstract.Class({
 		protected : {
 			abstractMethod : Abstract(function(){})
 		}
 	}); 
-	var Child = Abstract.Class.Extends(Parent)({});
+	var Child = classing.Abstract.Class.Extends(Parent)({});
 	ok(true , "an abstract class extends another abstract class [the abstract method in parent is not implemented]. No errors thrown");
 	/* End Test 3 */
 });
@@ -40,33 +40,33 @@ test("Invalid Extensions" , function(){
 		var Base = function() {
 			this.Val = 50;
 		};
-		var Derived = Class.Extends(Base)({});
+		var Derived = classing.Class.Extends(Base)({});
 	} , function(err) {
 		return err.code === 307;
-	} , "Extending a non-library class. An error [code:307] was thrown");
+	} , "Extending a non-library classing.Class. An error [code:307] was thrown");
 	/* End Test 1 */
 
 	/* Begin Test 2 */
 	throws(function() {
-		var Base = Final.Class({
+		var Base = classing.Final.Class({
 			public : {
 				val : 70
 			}
 		})
-		var Derived = Class.Extends(Base)({});
+		var Derived = classing.Class.Extends(Base)({});
 	} , function(err) {
 		return err.code === 301 ;
-	} , "Extending a final class. An error [code:301] was thrown");
+	} , "Extending a final classing.Class. An error [code:301] was thrown");
 	/* End Test 2 */
 
 	/* Begin Test 3 */
 	throws(function() {
-		var Base = Abstract.Class({
+		var Base = classing.Abstract.Class({
 			public : {
 				abstractMethod : Abstract(function(){})
 			}
 		})
-		var Derived = Class.Extends(Base)({});
+		var Derived = classing.Class.Extends(Base)({});
 	} , function(err) {
 		return err.code === 209;
 	} , "Extending an abstract class without implementing the abstract method or declaring the derived class as abstract. An error [code:209] was thrown");
@@ -74,12 +74,12 @@ test("Invalid Extensions" , function(){
 
 	/* Begin Test 4 */
 	throws(function() {
-		var Base = Abstract.Class({
+		var Base = classing.Abstract.Class({
 			public : {
 				abstractMethod : Abstract(function(){})
 			}
 		})
-		var Derived = Class.Extends(Base)({
+		var Derived = classing.Class.Extends(Base)({
 			public : {
 				abstractMethod : function(a,b,c){return a + b + c;}
 			}
@@ -91,12 +91,12 @@ test("Invalid Extensions" , function(){
 
 	/* Begin Test 5 */
 	throws(function() {
-		var Base = Class({
+		var Base = classing.Class({
 			public : {
 				finalMethod : Final(function(){return "Hello";})
 			}
 		})
-		var Derived = Class.Extends(Base)({
+		var Derived = classing.Class.Extends(Base)({
 			public : {
 				finalMethod : function(a,b,c){return a + b + c;}
 			}
@@ -108,12 +108,12 @@ test("Invalid Extensions" , function(){
 
 	/* Begin Test 6 */
 	throws(function() {
-		var Base = Class({
+		var Base = classing.Class({
 			protected : {
 				method : function(){return "Hello";}
 			}
 		})
-		var Derived = Class.Extends(Base)({
+		var Derived = classing.Class.Extends(Base)({
 			public : {
 				method : function(a,b,c){return a + b + c;}
 			}
@@ -125,12 +125,12 @@ test("Invalid Extensions" , function(){
 
 	/* Begin Test 7 */
 	throws(function() {
-		var Base = Class({
+		var Base = classing.Class({
 			public : {
 				method : function(){return "Hello";}
 			}
 		})
-		var Derived = Class.Extends(Base)({
+		var Derived = classing.Class.Extends(Base)({
 			public : {
 				method : Abstract(function(a,b,c){})
 			}
@@ -143,12 +143,12 @@ test("Invalid Extensions" , function(){
 
 test("Acessing Protected Components in Child Classes" , function(){
 	/* Begin Test 1 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		protected : {
 			pAttr : 70
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			getTheProtcetedAttr: function() {
 				return this.pAttr;
@@ -160,7 +160,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		private : {
 			msg : "a string declared in private"
 		},
@@ -170,7 +170,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 			} 
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			invokeProtecetdMethod: function() {
 				return this.pMethod();
@@ -182,7 +182,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 	/* End Test 2 */
 
 	/* Begin Test 3 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		private : {
 			msg : "a string declared in private"
 		},
@@ -197,7 +197,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 			} 
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			setProtecetedProperty : function(val) {
 				this.pProperty = val;
@@ -213,7 +213,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 	/* End Test 3 */
 
 	/* Begin Test 4 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		protected : {
 			counter : Static(0)
 		},
@@ -223,7 +223,7 @@ test("Acessing Protected Components in Child Classes" , function(){
 			}
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			getParentCounter : function() {
 				return Parent.counter;
@@ -237,18 +237,18 @@ test("Acessing Protected Components in Child Classes" , function(){
 
 test("Acessing Public Components in Child Classes" , function(){
 	/* Begin Test 1 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		public : {
 			attr : 70
 		}
 	});
-	var Child = Class.Extends(Parent)({});
+	var Child = classing.Class.Extends(Parent)({});
 	var obj = new Child();
 	ok(obj.attr === 70 , "public attribute accessed directly from a child object");
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		private : {
 			msg : "a string declared in private"
 		},
@@ -258,13 +258,13 @@ test("Acessing Public Components in Child Classes" , function(){
 			} 
 		}
 	});
-	var Child = Class.Extends(Parent)({});
+	var Child = classing.Class.Extends(Parent)({});
 	var obj = new Child();
 	ok(obj.method() === "a string declared in private" , "public method invoked directly from a child object");
 	/* End Test 2 */
 
 	/* Begin Test 3 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		private : {
 			msg : "a string declared in private"
 		},
@@ -279,14 +279,14 @@ test("Acessing Public Components in Child Classes" , function(){
 			} 
 		}
 	});
-	var Child = Class.Extends(Parent)({});
+	var Child = classing.Class.Extends(Parent)({});
 	var obj = new Child();
 	obj.property = "changed from child";
 	ok(obj.property === "changed from child" , "public property accessed directly from a child object");
 	/* End Test 3 */
 
 	/* Begin Test 4 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		public : {
 			counter : Static(0),
 			Construct : function() {
@@ -294,7 +294,7 @@ test("Acessing Public Components in Child Classes" , function(){
 			}
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			getParentCounter : function() {
 				return Parent.counter;
@@ -308,7 +308,7 @@ test("Acessing Public Components in Child Classes" , function(){
 
 test("Using the 'base' Keyword" , function(){
 	/* Begin Test 1 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		public: {
 			val : null,
 			Construct : Function.create(xTyped , [
@@ -319,7 +319,7 @@ test("Using the 'base' Keyword" , function(){
 			])
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			Construct : function(str) {
 				base(str);
@@ -332,14 +332,14 @@ test("Using the 'base' Keyword" , function(){
 	/* End Test 1 */
 
 	/* Begin Test 2 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		public : {
 			Greet : function() {
 				return "Hi";
 			}
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			Greet : function() {
 				return base.Greet() + ",Welcome";
@@ -352,12 +352,12 @@ test("Using the 'base' Keyword" , function(){
 	/* End Test 2 */
 
 	/* Begin Test 3 */
-	var Parent = Class({
+	var Parent = classing.Class({
 		protected : {
 			val : 50
 		}
 	});
-	var Child = Class.Extends(Parent)({
+	var Child = classing.Class.Extends(Parent)({
 		public : {
 			changeValFromThisTo : function(n){this.val = n},
 			changeValFromBaseTo : function(n){base.val = n},

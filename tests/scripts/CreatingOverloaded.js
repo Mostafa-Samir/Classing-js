@@ -114,7 +114,7 @@ test("Valid Defintions" , function() {
 
 	/* Begin Test 3 */
 	var Point2D = function(_x , _y) {this.x = _x; this.y = _y;}
-	xStamp(Point2D);
+	classing.xStamp(Point2D);
 	var f3 = Function.create(xTyped , [types(Point2D) , function(p) { console.log(0)} , types(Point2D,Point2D) , function(p,q) { return Math.sqrt(Math.pow(p.x-q.x , 2) + Math.pow(p.y-q.y , 2))}]);
 	ok(true , "No errors thrown : Overloaded function created");
 	/* End Test 3 */
