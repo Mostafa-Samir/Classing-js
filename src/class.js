@@ -5,7 +5,7 @@
 	@param {string} accesssLevel : the access level in which the implementation resides
 	@return {boolean} : true if the implementation is compatiable , false otherwise
 **/
-function xAreCompatiable(abstractRecord , implementation , accessLevel) {
+classing.xAreCompatiable = function(abstractRecord , implementation , accessLevel) {
 	if(abstractRecord.accessLevel === accessLevel) {
 		if(abstractRecord.description.isOverloaded) {
 			if(implementation._meta_) {
@@ -72,7 +72,7 @@ function xAreCompatiable(abstractRecord , implementation , accessLevel) {
 }
 
 
-var Class = (function() {
+classing.Class = (function() {
 	
 	//Static Helper function
 
@@ -183,7 +183,7 @@ var Class = (function() {
 							return extra.loc[key].referTo[key];
 						}
 						else {
-							throw xError("213" , "inaccessable member");
+							throw classing.xError("213" , "inaccessable member");
 						}
 					},
 					set : function _setter(newVal) {
@@ -192,7 +192,7 @@ var Class = (function() {
 								extra.loc[key].referTo[key] = newVal;
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					enumerable: true
@@ -207,7 +207,7 @@ var Class = (function() {
 							return extra.loc[key].value;
 						}
 						else {
-							throw xError("213" , "inaccessable member");
+							throw classing.xError("213" , "inaccessable member");
 						}
 					},
 					set : function _setter(newVal) {
@@ -216,7 +216,7 @@ var Class = (function() {
 								extra.loc[key].value = newVal;
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					enumerable: true
@@ -232,7 +232,7 @@ var Class = (function() {
 							return extra.loc[key].referTo[key];
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					set : function _setter(newVal) {
@@ -241,7 +241,7 @@ var Class = (function() {
 								extra.loc[key].referTo[key] = newVal;
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					enumerable: true
@@ -255,7 +255,7 @@ var Class = (function() {
 							return extra.loc[key].value;
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					set : function _setter(newVal) {
@@ -264,7 +264,7 @@ var Class = (function() {
 								extra.loc[key].value = newVal;
 						}
 						else {
-							throw xError("213","inaccessable member");
+							throw classing.xError("213","inaccessable member");
 						}
 					},
 					enumerable: true
@@ -328,8 +328,8 @@ var Class = (function() {
 		}
 
 	 return function (definition) {
-		var _reservedTimestamp = xSelf.timestamp;
-		xSelf.timestamp++;
+		var _reservedTimestamp = classing.xSelf.timestamp;
+		classing.xSelf.timestamp++;
 		/**
 		* Level 0 Validation : Validating the definition.
 		* Validation Rule :
@@ -337,7 +337,7 @@ var Class = (function() {
 			- Only three access modifiers are available : public , protected , private
 		**/
 		if(typeof definition !== "object") {
-			throw xError("201", "Invalid Definition");
+			throw classing.xError("201", "Invalid Definition");
 		}
 		//Creating the Class
 		return (function() {
@@ -346,22 +346,22 @@ var Class = (function() {
 
 			//saving the class options in the closure of the class
 			var classProprties = {
-				isAbstract : Class.options.isAbstract,
-				isFinal : Class.options.isFinal,
-				parent : Class.options.parent === null ? xEmptyParent : Class.options.parent,
-				interfaces : Class.options.interfaces,
+				isAbstract : classing.Class.options.isAbstract,
+				isFinal : classing.Class.options.isFinal,
+				parent : classing.Class.options.parent === null ? xEmptyParent : classing.Class.options.parent,
+				interfaces : classing.Class.options.interfaces,
 				timestamp : _reservedTimestamp,
 				constructorAccessLevel : "public"
 
 			};
 
 			//resetting class options
-			Class.options.parent = null;
-			Class.options.interfaces = null;
-			Class.options.isExtending = false;
-			Class.options.isImplementing = false;
-			Class.options.isAbstract = false;
-			Class.options.isFinal = false;
+			classing.Class.options.parent = null;
+			classing.Class.options.interfaces = null;
+			classing.Class.options.isExtending = false;
+			classing.Class.options.isImplementing = false;
+			classing.Class.options.isAbstract = false;
+			classing.Class.options.isFinal = false;
 
 			var _privliagedDictionary = {};
 			var _privliagedChilds = {};
@@ -410,16 +410,16 @@ var Class = (function() {
 
 			for(modifier in definition) {
 				if(typeof definition[modifier] !== 'object') {
-					throw xError("201" , "Invalid definition");
+					throw classing.xError("201" , "Invalid definition");
 				}
 				if(modifier !== "public" && modifier !== "private" && modifier !== "protected") {
-					throw xError("202" , modifier + ": undefined access modifier");
+					throw classing.xError("202" , modifier + ": undefined access modifier");
 				}
 				var currentModifier = definition[modifier];
 				for(key in currentModifier) {
 					//checking if this component's name already used
 					if(_ownComponentsNames[key]) {
-						throw xError("207","class cannot have two components with the same name");
+						throw classing.xError("207","class cannot have two components with the same name");
 					}
 					/* Begin Methods Case */
 					if(typeof currentModifier[key] === 'function') {
@@ -427,7 +427,7 @@ var Class = (function() {
 						//Checking if the method is a constructor
 						if(key === "Construct") {
 							if(currentModifier[key].isAbstract) {
-								throw xError("214" , "a constructor cannot be abstract");
+								throw classing.xError("214" , "a constructor cannot be abstract");
 							}
 							classProprties.constructorAccessLevel = modifier;
 							_metadata_.constructorAccessLevel = modifier;
@@ -441,29 +441,29 @@ var Class = (function() {
 						//Checking if the method is overriding an inherited method
 						else if(classProprties.parent._metadata.methods[key]) {
 							if(currentModifier[key].isAbstract) {
-								throw xError("215" , "an abstract method cannot override a concrete one");
+								throw classing.xError("215" , "an abstract method cannot override a concrete one");
 							}
 							if(classProprties.parent._metadata.methods[key].accessLevel !== modifier) {
-								throw xError("216" , "overriding a method in a different access level is not allowed");
+								throw classing.xError("216" , "overriding a method in a different access level is not allowed");
 							}
 							if(classProprties.parent._metadata.methods[key].isFinal) {
-								throw xError("204","Cannot override a final method");
+								throw classing.xError("204","Cannot override a final method");
 							}
 						}
 						//Checking if the method is implementing an abstract method
 						else if(_ancestorsAbstracts[key]) {
-							if(xAreCompatiable(_ancestorsAbstracts[key] , currentModifier[key] , modifier)) {
+							if(classing.xAreCompatiable(_ancestorsAbstracts[key] , currentModifier[key] , modifier)) {
 								_ancestorsAbstracts[key] = undefined;
 								//marking the abstrcat record as undefined is equivelant to saying that this abstrcat method is implemented
 							}
 							else {
-								throw xError("205","on function " + key + ": mismatch between implementation and abstract decleration");
+								throw classing.xError("205","on function " + key + ": mismatch between implementation and abstract decleration");
 							}
 						}
 						//Checking if the method itself is abstract
 						if(currentModifier[key].isAbstract) {
 							if(modifier === "private") {
-								throw xError("203" , "marking a private method as abstract is not allowed");
+								throw classing.xError("203" , "marking a private method as abstract is not allowed");
 							}
 							_ownAbstrcats[key] = {
 								accessLevel: modifier,
@@ -564,7 +564,7 @@ var Class = (function() {
 									}
 								}
 								else {
-									throw xError("206","setting a non-static attribute to an object is not allowed");
+									throw classing.xError("206","setting a non-static attribute to an object is not allowed");
 								}
 							}
 							else {
@@ -604,10 +604,10 @@ var Class = (function() {
 
 			var len = Object.keys(_ownAbstrcats).length;
 			if(len == 0 && classProprties.isAbstract) {
-				throw xError("208","an abstrcat class must contain at least one abstract method");
+				throw classing.xError("208","an abstrcat class must contain at least one abstract method");
 			}
 			if(len > 0 && !classProprties.isAbstract) {
-				throw xError("209","an abstract method must be contained in an abstract class");
+				throw classing.xError("209","an abstract method must be contained in an abstract class");
 			}
 
 			_ancestorsAbstracts = undefined; //Dispose _ancestorsAbstracts
@@ -662,7 +662,7 @@ var Class = (function() {
 							}
 							catch(ex) {
 								if(ex.code !== 212) {
-									throw xError("210","parent class doesn't contain a default constructor");
+									throw classing.xError("210","parent class doesn't contain a default constructor");
 								}
 								throw ex;
 							}
@@ -685,11 +685,11 @@ var Class = (function() {
 					var pMark = !instantiator.isBase ? (instantiator.privliagedMark ? instantiator.privliagedMark : "") : instantiator.caller.privliagedMark;
 
 					if(classProprties.constructorAccessLevel !== "public" && instantiator !== theEYE && !_privliagedDictionary[pMark] && !(_privliagedChilds[pMark] && classProprties.constructorAccessLevel === "protected")) {
-						throw xError("212" , "inaccessable constructor");
+						throw classing.xError("212" , "inaccessable constructor");
 					}
 
 					if(classProprties.isAbstract && _classPattern.caller !== theEYE) {
-						throw xError("211","Cannot instantiate an abstract class");
+						throw classing.xError("211","Cannot instantiate an abstract class");
 					}
 					else {
 						var _hiddenUnit = {};
@@ -800,7 +800,7 @@ var Class = (function() {
 				_staticComponents = undefined; //Dispose _staticComponents
 
 				_classPattern.__extendProtectedStaticAccess = function(childsPrivlaged) {
-					if(_classPattern.__extendProtectedStaticAccess.caller.caller === Class) {
+					if(_classPattern.__extendProtectedStaticAccess.caller.caller === classing.Class) {
 						for(key in childsPrivlaged) {
 							_privliagedChilds[key] = true;
 						}
@@ -846,7 +846,7 @@ options is an object that holds the configurations of the class to be created.
 	- isAbstract {Boolean} : holds true if the class is declared abstract , false otherwise.
 	- isFinal {Boolean} : holds true if the class is declared final , false otherwise.
 **/
-Class.options = {
+classing.Class.options = {
 	parent:null,
 	interfaces : null,
 	isExtending:false,
@@ -861,22 +861,22 @@ Class.options = {
 		@param {function} parentRef : the reference to the parent class
 		@return {function} : the Class function (to continue the definition of the class)
 **/
-Class.Extends = function(parentRef) {
-	if(!Class.options.isImplementing && !parentRef !== undefined && parentRef.xClass) {
+classing.Class.Extends = function(parentRef) {
+	if(!classing.Class.options.isImplementing && !parentRef !== undefined && parentRef.xClass) {
 		if(!parentRef.isFinal) {
-			Class.options.parent = parentRef;
-			Class.options.isExtending = true;
-			return Class;
+			classing.Class.options.parent = parentRef;
+			classing.Class.options.isExtending = true;
+			return classing.Class;
 		}
 		else {
-			throw xError("301","Cannot extend a final class");
+			throw classing.xError("301","Cannot extend a final class");
 		}
 	}
 	else {
-		if(Class.options.isImplementing) {
-			throw xError("302" , "Invalid Decleration");
+		if(classing.Class.options.isImplementing) {
+			throw classing.xError("302" , "Invalid Decleration");
 		}
-		throw xError("307","attempting to extend a non Classing{js} Class or undefined");
+		throw classing.xError("307","attempting to extend a non Classing{js} Class or undefined");
 	}
 }
 
@@ -887,7 +887,7 @@ Class.Extends = function(parentRef) {
 		@params {functions} : the list of interfaces the class is implementing
 		@return {function} : the Class function (to continue the definition of the class)	
 **/
-Class.Implements = function() {
+classing.Class.Implements = function() {
 	var args = [];
 	var len = arguments.length;
 	if(len !== 0) {
@@ -895,20 +895,20 @@ Class.Implements = function() {
 		while(counter < len) {
 			args.push(arguments[counter]);
 			if(args[counter] === undefined || !args[counter].isInterface) {
-				throw xError("306","attempting to implement a non-interface or undefined");
+				throw classing.xError("306","attempting to implement a non-interface or undefined");
 			}
 			counter++;
 		}
-		Class.options.isImplementing = true;
-		Class.options.interfaces = args;
-		return Class;
+		classing.Class.options.isImplementing = true;
+		classing.Class.options.interfaces = args;
+		return classing.Class;
 	}
 	else {
-		throw xError("302","Invalid Decleration");
+		throw classing.xError("302","Invalid Decleration");
 	}
 }
 
-var Static = function(variable) {
+classing.Static = function(variable) {
 	var staticWrapper = {
 		value:variable,
 		isStatic:true
@@ -916,6 +916,8 @@ var Static = function(variable) {
 
 	return staticWrapper;
 }
+// a global shortcut for Static function
+var Static = classing.Static;
 
 /**
 	Final is a Class modifier that marks a function/class unextendable
@@ -924,21 +926,26 @@ var Static = function(variable) {
 		@param {function} method : an function to be marked final
 		@return {function} : the marked function
 **/
-var Final = function(method) {
+classing.Final = function(method) {
 	if(method.isAbstract) {
-			throw xError("303","abstract methods cannot be final");
+			throw classing.xError("303","abstract methods cannot be final");
 	}
 	method.isFinal = true;
 	return method;
 }
+// a global shortcut for Final function
+var Final = function(method) {
+	return classing.Final(method);
+}
+
 /**
 	Final.Class : marks the class to be created as Final
 		@return {function} : Class function.
 **/
-Object.defineProperty(Final , 'Class' , { 
+Object.defineProperty(classing.Final , 'Class' , { 
 	get : function() {
-		window['Class'].options.isFinal = true;
-		return window['Class'];
+		classing.Class.options.isFinal = true;
+		return classing.Class;
 	},
 	set : function(newVal) {}
 });
@@ -956,24 +963,28 @@ Object.defineProperty(Final , 'Class' , {
 		@return {function} : the marked overloaded function
 
 **/
-var Abstract = function(method) {
+classing.Abstract = function(method) {
 	if(method.isFinal) {
-		throw xError("304","final methods cannot be abstract");
+		throw classing.xError("304","final methods cannot be abstract");
 	}
 	if(method._meta_) {
 		if(!method.isEmpty) {
-			throw xError("305","An abstract method cannot have implementation");
+			throw classing.xError("305","An abstract method cannot have implementation");
 		}
 		method.isAbstract = true;
 		return method;
 	}
-	else if(!Abstract.isNotImplemented(method)) {
-		throw xError("305","An abstract method cannot have implementation");
+	else if(!classing.Abstract.isNotImplemented(method)) {
+		throw classing.xError("305","An abstract method cannot have implementation");
 	}
 
 	method.isAbstract = true;
 	method._meta_= {argsCount : method.length};
 	return method;
+}
+// a global shortcut for Abstract function
+var Abstract = function(method) {
+	return classing.Abstract(method);
 }
 
 /**
@@ -982,7 +993,7 @@ var Abstract = function(method) {
 		@return {boolean} : true if it's empty , false otherwise.
 **/
 
-Abstract.isNotImplemented = function(method) {
+classing.Abstract.isNotImplemented = function(method) {
 	var notImplementedPattern = new RegExp(/function\s*\w*\([A-Za-z0-9,$_ ]*\)\s*\{\s*\}/);
 	var methodStr = method.toString();
 	return notImplementedPattern.test(methodStr);
@@ -994,10 +1005,10 @@ Abstract.isNotImplemented = function(method) {
 		@return {function} : Class function.
 **/
 
-Object.defineProperty(Abstract , 'Class' , { 
+Object.defineProperty(classing.Abstract , 'Class' , { 
 	get : function() {
-		window['Class'].options.isAbstract = true;
-		return window['Class'];
+		classing.Class.options.isAbstract = true;
+		return classing.Class;
 	},
 	set : function(newVal) {}
 });

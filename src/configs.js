@@ -1,13 +1,15 @@
+var classing = {}; //Library's Namespace
+
 /**
 	* _instantiateOnce : a constructor function that is can be used only once to create
 						 the xSelf constant
 **/
-var _instantiateOnce = (function() {
+classing._instantiateOnce = (function() {
 	var flag = false;
 	return function() {
 		var _stamp = 1010;
 		if(flag) {
-			throw xError("000" , "not allowed");
+			throw classing.xError("000" , "not allowed");
 		}
 		else {
 			flag = true;
@@ -17,7 +19,7 @@ var _instantiateOnce = (function() {
 				},
 				set : function _setter(value) {
 					var caller = _setter.caller;
-					if(caller === Class || caller === Interface || caller === xStamp) {
+					if(caller === classing.Class || caller === classing.Interface || caller === classing.xStamp) {
 						_stamp = value
 					}
 				}
@@ -29,9 +31,13 @@ var _instantiateOnce = (function() {
 /**
 	*Library's Constant keywords : xTyped , xNonTyped , xSelf
 **/
-Object.defineProperty(window , 'xTyped' , {value:true , writable:false});
-Object.defineProperty(window , 'xNonTyped' , {value:false , writable:false});
-Object.defineProperty(window , 'xSelf' , {value : new _instantiateOnce() , writable:false});
+Object.defineProperty(classing , 'xTyped' , {value:true , writable:false});
+Object.defineProperty(classing , 'xNonTyped' , {value:false , writable:false});
+Object.defineProperty(classing , 'xSelf' , {value : new classing._instantiateOnce() , writable:false});
+//global shortcuts for the library's constants
+var xTyped = classing.xTyped;
+var xNonTyped = classing.xNonTyped;
+var xSelf = classing.xSelf;
 /**
 	*base : a global variable used to reference the Base class in inhertance
 **/
@@ -43,7 +49,7 @@ var base = null;
 	@param {String} msg : message of the error
 	@return {Error} : The Error Object to throw
 **/
-function xError(code , msg) {
+classing.xError = function(code , msg) {
 	var err = new Error();
 	err.name = "xError";
 	err.code = parseInt(code);

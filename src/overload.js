@@ -3,10 +3,10 @@
 			 which is considered an intermidate data to identify instances of this constructor
 	@param {function} Constructor : the constructro function
 **/
-function xStamp(Constructor) {
+classing.xStamp = function(Constructor) {
 	if(typeof Constructor === "function") {
-		Constructor.timestamp = xSelf.timestamp;
-		xSelf.timestamp++;
+		Constructor.timestamp = classing.xSelf.timestamp;
+		classing.xSelf.timestamp++;
 	}
 }
 
@@ -15,13 +15,13 @@ function xStamp(Constructor) {
 	@param {numbr} count : the number of arguments
 	@param {string} list : the list of types
 **/
-function _xTypes(count , list) {
-	if(_xTypes.caller === types) {
+classing._xTypes = function(count , list) {
+	if(classing._xTypes.caller === classing.types) {
 		this.count = count;
 		this.list = list;
 	}
 	else {
-		throw xError("000" , "Not Allowed");
+		throw classing.xError("000" , "Not Allowed");
 	}
 }
 
@@ -30,16 +30,16 @@ function _xTypes(count , list) {
 	@params {functions} : the constructor functions of the types (either native or custom)
 	@return {Object : _xTypes} : the _xTypes Object Created
 **/
-function types() {
+classing.types = function() {
 	var count = arguments.length;
     var list = "";
     for(var i = 0 ; i < count ; i++) {
-    	if(arguments[i] === xSelf) {
-    		list += xSelf.timestamp;
+    	if(arguments[i] === classing.xSelf) {
+    		list += classing.xSelf.timestamp;
     		continue;
     	}
     	if(typeof arguments[i] !== "function") {
-    		throw xError("103" , "Invalid Type");
+    		throw classing.xError("103" , "Invalid Type");
     	}
         if(arguments[i].timestamp) {
            list += arguments[i].timestamp;
@@ -54,9 +54,11 @@ function types() {
         	list += ",";
         }
     }
-    var xList = new _xTypes(count , list);
+    var xList = new classing._xTypes(count , list);
     return xList;
 }
+//global shortcut for types function
+var types = classing.types;
 
 Function.create = (function() {
 
@@ -71,7 +73,7 @@ Function.create = (function() {
 		if(typedFlag) {
 			for(i in internalMap) {
 				for(j in internalMap[i]) {
-					if(!Abstract.isNotImplemented(internalMap[i][j])) {
+					if(!classing.Abstract.isNotImplemented(internalMap[i][j])) {
 						return false;
 					}
 				}
@@ -80,7 +82,7 @@ Function.create = (function() {
 		
 		else {
 			for(i in internalMap) {
-				if(!Abstract.isNotImplemented(internalMap[i])) {
+				if(!classing.Abstract.isNotImplemented(internalMap[i])) {
 					return false;
 				}
 			}
@@ -125,10 +127,10 @@ Function.create = (function() {
 		*@return {function} : returns the overloaded function pattern
 		**/
 		if(typed === undefined || !def || flag) {
-			throw xError("100" , "invalid arguments");
+			throw classing.xError("100" , "invalid arguments");
 		}
 		else if(typeof typed !== "boolean" || !(def instanceof Array )) {
-			throw xError("100" , "invalid arguments");
+			throw classing.xError("100" , "invalid arguments");
 		}
 		else {
 			var len = def.length ;
@@ -148,17 +150,17 @@ Function.create = (function() {
 				**/ 
 				var _compressed = [];
 				if(len === 0 || len % 2 !== 0) {
-					throw  xError("101" , "inavalid array format");
+					throw  classing.xError("101" , "inavalid array format");
 				}
 				else {
 					for(var i = 0 ; i < len ; i = i + 2) {
 						var _list , argsCount;
-						if(!(def[i] instanceof _xTypes) || typeof def[i + 1] !== "function") {
-							throw xError("101" , "inavalid array format");
+						if(!(def[i] instanceof classing._xTypes) || typeof def[i + 1] !== "function") {
+							throw classing.xError("101" , "inavalid array format");
 						}
 						else {
 							if(def[i + 1].length !== def[i].count) {
-								throw xError("102" , "arguments number mismatch");
+								throw classing.xError("102" , "arguments number mismatch");
 							}
 							def[i + 1].types = def[i].list;
 							_compressed.push(def[i + 1]);
@@ -183,7 +185,7 @@ Function.create = (function() {
 						var current = _compressed[i];
 						_metadata.types.push(current.types);
 						if(_map[current.length][current.types] !== undefined) {
-							throw xError("106" , "duplicate arguments list found");
+							throw classing.xError("106" , "duplicate arguments list found");
 						}
 						_map[current.length][current.types] = current ;
 					}
@@ -210,11 +212,11 @@ Function.create = (function() {
 
 
 						if(count > max) {
-							throw xError("105", "no overloaded instance of the function matches the argument list");
+							throw classing.xError("105", "no overloaded instance of the function matches the argument list");
 						}
 						var target = map[count][argsTypes];
 						if(!target) {
-							throw xError("105", "no overloaded instance of the function matches the argument list");
+							throw classing.xError("105", "no overloaded instance of the function matches the argument list");
 						}
 						else {
 							return target.apply(this , args);
@@ -232,12 +234,12 @@ Function.create = (function() {
 					must be non-empty and of elements of only functions
 				**/
 				if(len === 0) {
-					throw xError("101","inavlid array format");
+					throw classing.xError("101","inavlid array format");
 				}
 				else {
 					for(var i = 0 ; i < len ; i++) {
 						if(typeof def[i] !== "function") {
-							throw xError("101","inavlid array format");
+							throw classing.xError("101","inavlid array format");
 						}
 					}
 
@@ -252,7 +254,7 @@ Function.create = (function() {
 					for(var i = 0 ; i < len ; i++) {
 						var mapIndx = def[i].length;
 						if(_map[mapIndx] !== undefined) {
-							throw xError("106" , "duplicate arguments list found");
+							throw classing.xError("106" , "duplicate arguments list found");
 						}
 						_map[mapIndx] = def[i];
 						_metadata.counts.push(mapIndx);
@@ -272,12 +274,12 @@ Function.create = (function() {
 						}
 
 						if(count > max) {
-							throw xError("105" , "no overloaded instance of the function matches the argument list");
+							throw classing.xError("105" , "no overloaded instance of the function matches the argument list");
 							return;
 						}
 						var target = map[count];
 						if(!target) {
-							throw xError("105" , "no overloaded instance of the function matches the argument list");
+							throw classing.xError("105" , "no overloaded instance of the function matches the argument list");
 							return;
 						}
 						else {

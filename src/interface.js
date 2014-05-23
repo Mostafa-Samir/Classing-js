@@ -4,23 +4,23 @@
 	@return {Object} : the object representing the interface
 
 **/
-function Interface(defintion) {
+classing.Interface = function(defintion) {
 
 	var abstracts = {};
 
-	var reservedTimestamp = xSelf.timestamp;
-	xSelf.timestamp++;
+	var reservedTimestamp = classing.xSelf.timestamp;
+	classing.xSelf.timestamp++;
 
 	for(key in defintion) {
 		var currentComponent = defintion[key];
 		if(typeof currentComponent !== "function") {
-			throw xError("401" , "Interfaces contain only methods"); //interfaces contain only functions
+			throw classing.xError("401" , "Interfaces contain only methods"); //interfaces contain only functions
 		}
 		else {
 			if(currentComponent.isEmpty !== undefined) {
 				//the function is defined using Function.create
 				if(!currentComponent.isEmpty) {
-					throw xError("402","an interface method cannot have any implementation"); //every function must be empty
+					throw classing.xError("402","an interface method cannot have any implementation"); //every function must be empty
 				}
 				else {
 					currentComponent._meta_.isOverloaded = true;
@@ -32,8 +32,8 @@ function Interface(defintion) {
 			}
 			else {
 				//the function is defined in the ordinary way
-				if(!Abstract.isNotImplemented(currentComponent)) {
-					throw xError("402","an interface method cannot have any implementation");
+				if(!classing.Abstract.isNotImplemented(currentComponent)) {
+					throw classing.xError("402","an interface method cannot have any implementation");
 				}
 				else {
 					abstracts[key] = {
