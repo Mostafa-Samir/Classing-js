@@ -32,6 +32,7 @@
 				<ul class="nav nav-list">
 					<li><a href="../index.html">API Summery</a></li>
 					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="structure.html">Library's Structure</a></li>
 					<li><a href="overload.html">Function Overloading</a></li>
 					<li class = "active"><a href="classes.html">Creating Classes</a></li>
 					<li><a href="inheritance.html">Inheritance</a></li>
@@ -42,11 +43,11 @@
 			</div>
 			<div class = "span10">
 				<h3>How to create Classes?</h3>
-				<p>This what <code>Classing{js}</code> is all about , classes. Creating a class is very simple task , just call the function <code>Class</code>
+				<p>This what <code>Classing{js}</code> is all about , classes. Creating a class is very simple task , just call the function <code>classing.Class</code>
 				</p>
 				<div class = "doc">
 					<div class="doc-header">Class</div>
-					<div class="doc-api">Class(defintion)</div>
+					<div class="doc-api">classing.Class(defintion)</div>
 					<div class="doc-component">
 						<span class="name">defintion</span>
 						<span class="type">Object</span>
@@ -60,7 +61,7 @@
 				</div>
 				<p>The easiest way to start is by writing the pattern in the follwing code and then continue with writing the defintion of your class:</p>
 				<pre class="code">
-var ClassName = Class({
+var ClassName = classing.Class({
 	//Your defintion goes here
 });
 				</pre>
@@ -74,7 +75,7 @@ var ClassName = Class({
 				<p>The access modifers of <code>Classing{js}</code> follows the convetion of C++, which is that all the components of a certain access level are clustered together in a block specified by the access modifier (Unlike Java or C# in which every component is preceeded by the access modifier).
 				<p>In <code>Classing{js}</code> a block specifying an access level is writtenn as an object named with the related access modifier. For better understanding , take a look at this code : </p>
 				<pre class="code">
-var Test = Class({
+var Test = classing.Class({
 	private : {
 		//Your private compnents go here
 	},
@@ -97,7 +98,7 @@ var Test = Class({
 				<p>Now, you can start filling in your components , each inside its desired access level , in the same way you write proprties in a regular javascript object <span style ="color:red;"><b>(again, don't forget the commas)</b></span></p>
 				<p>Here's an example of a full class : </p>
 				<pre class="code">
-var Person = Class({
+var Person = classing.Class({
 	private : {
 		counter:Static(0),
 		name : null,
@@ -119,14 +120,14 @@ var Person = Class({
 				<pre class="code">
 attributeName : attributeValue
 				</pre>
-				<p>If you want to make this attribute static , just wrap the <code>attributeValue</code> with the function <code>Static</code></p>
+				<p>If you want to make this attribute static , just wrap the <code>attributeValue</code> with the function <code>classing.Static</code>(you could also use the global shortcut <code>Static</code>)</p>
 				<pre class="code">
 attributeName : Static(attributeValue)
 				</pre>
 				<p>Here is an exmaple of a class with two attributes , a protecetd static attribute called <b>ClassName</b>, and a public non-static attribute called <b>Id.
 				</b></p>
 				<pre class="code">
-var AllAttributes = Class({
+var AllAttributes = classing.Class({
 	protected : {
 		ClassName : Static("AllAttributes")
 	},
@@ -137,7 +138,7 @@ var AllAttributes = Class({
 				</pre>
 				<p>The attribute could be intialized to any value of any type but there's a little limitation on non-static attributes. A non-static attributes cannot be intialized to an object, doing so will throw an error.</p>
 				<pre class="code">
-var Matrix = Class({
+var Matrix = classing.Class({
 	private : {
 		internalArray : new Array() //Error
 	}
@@ -145,7 +146,7 @@ var Matrix = Class({
 				</pre>
 				<p>This limitation can be overcame by intially setting the attribute to null , then resetting it to the desired object inside the constructor of the class, like in the following example:</p>
 				<pre class="code">
-var Matrix = Class({
+var Matrix = classing.Class({
 	private : {
 		internalArray : null
 	},
@@ -158,7 +159,7 @@ var Matrix = Class({
 				<h4>Methods</h4>
 				<p>Methods are simply functions. They are defined in the same way used in regular javascript objects. They can be regular function or <code>Classing{js}</code> overloaded functions, and like attributes if a method is desired to be static it's just wraped with the <code>Static</code> function.</p>
 				<pre class="code">
-var Employee = Class({
+var Employee = classing.Class({
 	private : {
 		counter : Static(0),
 		hoursWorked : 0,
@@ -186,10 +187,10 @@ var Employee = Class({
 				<p>The <b>constructor function</b> is a special method of the class, identified with the name <code>Construct</code>. the constructor function gets called upon the creation of the object and cannot be invoked again. If you didn't write a constructor function for your class , a default (0-arguments) constructor will be automatically generated for the class. On the other hand , if you did define a constructor function , the default constructor will not be automatically generated and you must write it yourself. Like any other method , the constructor could be a regular function or <code>Classing{js}</code> overloaded functions and follows the same rules in accessing the class' components.</p>
 				<p>A constructor can be in any access level. A class with a private constructor cannot be instantiated or extended. A class with a protected constructor cannot be instantiated but can be extended.</p>
 
-				<p>To create a <b>copy constructor</b> ,use the typed overloading mode of <code>Function.create</code> and add an instance with an associated type of <code>xSelf</code> which points the class being created <span style="color:red"><b>(Do Not use the class name in the copy constructor, doing so will throw an error)</b></span></p>
+				<p>To create a <b>copy constructor</b> ,use the typed overloading mode of <code>Function.create</code> and add an instance with an associated type of <code>classing.xSelf</code> (or the global shortcut <code>xSelf</code>) which points the class being created <span style="color:red"><b>(Do Not use the class name in the copy constructor, doing so will throw an error)</b></span></p>
 				<p>Here's an example of a class with a default , a 1-argument and a copy constructors</p>
 				<pre class="code">
-var Human = Class({
+var Human = classing.Class({
 	private: {
 		age : 0
 	},
@@ -222,7 +223,7 @@ propertyName : {
 				</pre>
 				<p>Like attributes and methods , if a property is desired to be static it's just wrapped with the <code>Static</code> function. Here is an example of a class that contains three proprties, one of them is static.</p>
 				<pre class="code">
-var PhoneBookRecord = Class({
+var PhoneBookRecord = classing.Class({
 	private : {
 		count : Static(0),
 		phoneNum : null,

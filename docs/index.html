@@ -44,7 +44,7 @@
 						<li class="tabbed"><a href="#interface">Interface</a></li>
 						<li class="tabbed"><a href="#implements">Class.Implements</a></li>
 						<li class="tabbed"><a href="#instanceof">Object::instanceOf</a></li>
-					<li><a href = "tutorial/overload.html">Detailed Tutorial</a></li>
+					<li><a href = "tutorial/structure.html">Detailed Tutorial</a></li>
 				</ul>
 			</div>
 			<div class = "span10">
@@ -94,6 +94,9 @@ var Add = Function.create(xNonTyped , [
 						<div class="doc">
 							<div class = "doc-header">types</div>
 							<div class = "doc-api">
+								classing.types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
+							</div>
+							<div class = "doc-api" style="margin-top:0px;" title="Global Shortcut">
 								types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
 							</div>
 							<div class="doc-component">
@@ -130,7 +133,7 @@ var Add = Function.create(xTyped , [
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">xStamp</div>
-							<div class="doc-api">xStamp(Constructor)</div>
+							<div class="doc-api">classing.xStamp(Constructor)</div>
 							<div class="doc-component">
 								<span class="name">Constructor</span>
 								<span class="type">Function</span>
@@ -147,7 +150,7 @@ var Add = Function.create(xTyped , [
 						<pre class="code">
 var Complex = function(re , img) {
 	this.re = re; this.img = img;}
-xStamp(Complex);
+classing.xStamp(Complex);
 var Add = Function.create(xTyped , [
 	types(Complex,Complex),function(Z,W){
 		return new Complex(Z.re + W.re,Z.img + W.img);
@@ -162,7 +165,7 @@ var Add = Function.create(xTyped , [
 					<div class="span6">
 						<div class = "doc">
 							<div class="doc-header">Class</div>
-							<div class="doc-api">Class(defintion)</div>
+							<div class="doc-api">classing.Class(defintion)</div>
 							<div class="doc-component">
 								<span class="name">defintion</span>
 								<span class="type">Object</span>
@@ -183,7 +186,7 @@ var Add = Function.create(xTyped , [
 						</ul>
 						<h4>Example:</h4>
 						<pre class="code">
-var Person = Class({
+var Person = classing.Class({
 	public : { name : "John Doe"}
 });
 						</pre>
@@ -195,7 +198,8 @@ var Person = Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Static</div>
-							<div class="doc-api">Static(component)</div>
+							<div class="doc-api">classing.Static(component)</div>
+							<div class="doc-api" style="margin-top:0px" title="Global Shortcut">Static(component)</div>
 							<div class="doc-component">
 								<span class="name">component</span>
 								<span class="type">unspecific</span>
@@ -226,7 +230,8 @@ var Person = Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Final</div>
-							<div class="doc-api">Final(method)</div>
+							<div class="doc-api">classing.Final(method)</div>
+							<div class="doc-api" style="margin-top:0px" title="Global Shortcut">Final(method)</div>
 							<div class="doc-component">
 								<span class="name">method</span>
 								<span class="type">Function</span>
@@ -258,7 +263,7 @@ var Visitor  = Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Final.Class</div>
-							<div class="doc-api">Final.Class</div>
+							<div class="doc-api">classing.Final.Class</div>
 							<div class="doc-component">
 								<span class="name">returns</span>
 								<span class="type">Function</span>
@@ -273,7 +278,7 @@ var Visitor  = Class({
 						</ul>
 						<h4>Example:</h4>
 						<pre class="code">
-var Infertile = Final.Class({
+var Infertile = classing.Final.Class({
 	public : {name : null}
 })
 						</pre>
@@ -285,7 +290,8 @@ var Infertile = Final.Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Abstract</div>
-							<div class="doc-api">Abstract(method)</div>
+							<div class="doc-api">classing.Abstract(method)</div>
+							<div class="doc-api" style="margin-top:0px;" title="Global Shortcut">Abstract(method)</div>
 							<div class="doc-component">
 								<span class="name">method</span>
 								<span class="type">Function</span>
@@ -306,7 +312,7 @@ var Infertile = Final.Class({
 						</ul>
 						<h4>Example:</h4>
 						<pre class="code">
-var Child = Abstract.Class({
+var Child = classing.Abstract.Class({
 	public: { Play : Abstract(function(){}) }
 });
 						</pre>
@@ -318,7 +324,7 @@ var Child = Abstract.Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Abstract.Class</div>
-							<div class="doc-api">Abstract.Class</div>
+							<div class="doc-api">classing.Abstract.Class</div>
 							<div class="doc-component">
 								<span class="name">returns</span>
 								<span class="type">Function</span>
@@ -333,7 +339,7 @@ var Child = Abstract.Class({
 						</ul>
 						<h4>Example:</h4>
 						<pre class="code">
-var Shape = Abstract.Class({
+var Shape = classing.Abstract.Class({
 	public : { Area : Abstract(function(){})}
 });
 						</pre>
@@ -345,7 +351,7 @@ var Shape = Abstract.Class({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Class.Extends</div>
-							<div class="doc-api">Class.Extends(Parent)</div>
+							<div class="doc-api">classing.Class.Extends(Parent)</div>
 							<div class="doc-component">
 								<span class="name">Parent</span>
 								<span class="type">_classPattern Function</span>
@@ -363,7 +369,7 @@ var Shape = Abstract.Class({
 						<li>To access the parent object, use the <code>base</code> keyword.</li>
 						<h4>Example:</h4>
 						<pre class="code">
-var Child = Class.Extends(Parent)({
+var Child = classing.Class.Extends(Parent)({
 	public : {
 		newFunc : function(){ return "function of child"; }
 	}
@@ -377,7 +383,7 @@ var Child = Class.Extends(Parent)({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Interface</div>
-							<div class="doc-api">Interface(defintion)</div>
+							<div class="doc-api">classing.Interface(defintion)</div>
 							<div class="doc-component">
 								<span class="name">defintion</span>
 								<span class="type">Object</span>
@@ -398,7 +404,7 @@ var Child = Class.Extends(Parent)({
 						</ul>
 						<h4>Example:</h4>
 						<pre class="code">
-var IPayable = Interface({
+var IPayable = classing.Interface({
 	getPaid : function()
 })
 						</pre>
@@ -410,7 +416,7 @@ var IPayable = Interface({
 					<div class="span6">
 						<div class="doc">
 							<div class="doc-header">Class.Implements</div>
-							<div class="doc-api">Class.Implements(i<sub>1</sub>,i<sub>2</sub>,...)</div>
+							<div class="doc-api">classing.Class.Implements(i<sub>1</sub>,i<sub>2</sub>,...)</div>
 							<div class="doc-component">
 								<span class="name">i<sub>j</sub></span>
 								<span class="type">Object</span>
@@ -429,7 +435,7 @@ var IPayable = Interface({
 						<p style="margin-left:20px;"><code>Class.Extends(...).Implements(...)</code></p>
 						<h4>Example:</h4>
 						<pre class="code">
-var Employee = Class.Implements(IPayable)({
+var Employee = classing.Class.Implements(IPayable)({
 	public: {getPaid : function(){return "$5000.00"}}
 })
 						</pre>
@@ -459,9 +465,9 @@ var Employee = Class.Implements(IPayable)({
 						<li>All instances of <code>Object</code> (which is exaclty every object you make) will have the <code>instanceOf</code> method.</li>
 						<h4>Eaxmple:</h4>
 						<pre class="code">
-var IVoid = Interface({ func : function(){} });
-var Parent = Class({});
-var Child = Class.Extends(Parent).Implements(IVoid)({
+var IVoid = classing.Interface({ func : function(){} });
+var Parent = classing.Class({});
+var Child = classing.Class.Extends(Parent).Implements(IVoid)({
 	public : { func : function(){return "void";} }
 });
 var obj = new Child();

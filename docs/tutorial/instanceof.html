@@ -21,6 +21,7 @@
 				<ul class="nav nav-list">
 					<li><a href="../index.html">API Summery</a></li>
 					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="structure.html">Library's Structure</a></li>
 					<li><a href="overload.html">Function Overloading</a></li>
 					<li><a href="classes.html">Creating Classes</a></li>
 					<li><a href="inheritance.html">Inheritance</a></li>
@@ -35,15 +36,15 @@
 				<p>It's extremly simple to use , just call <code>yourObject.instanceOf(ancestor)</code> and it will return true if your object is an instance of that ancestor, or false otherwise.</p>
 				<p>Here's an exmaple that will make things even clearer:</p>
 				<pre class="code">
-var Identifiable = Interface({
+var Identifiable = classing.Interface({
 	getIdentified: function(){}
 });
 
-var IPayable = Interface({
+var IPayable = classing.Interface({
 	getPaid : function(){}
 });
 
-var Person = Class.Implements(Identifiable)({
+var Person = classing.Class.Implements(Identifiable)({
 	private : {
 		id : null,
 	},
@@ -68,7 +69,7 @@ var Person = Class.Implements(Identifiable)({
 	}
 });
 
-var Employee = Class.Extends(Person).Implements(IPayable)({
+var Employee = classing.Class.Extends(Person).Implements(IPayable)({
 	protected : {
 		salary : 5000,
 		balance : 0

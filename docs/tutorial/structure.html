@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/override.bootstrap.slate.css" type="text/css"/>
+		<link rel="stylesheet" href="../css/bootstrap-responsive.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/tutorial.override.jquery.snippet.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/docs-style.css">
+		<title>Tutorial : Library's Structure</title>
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-th-list"></span></a>
+					<a href="#" class="brand">Classing{js}</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero-unit">
+			<h3>Classing{js} Tutorial</h3>
+			<h1>Library's Structure</h1>
+		</div>
+
+		<div class="row-fluid">
+			<div class = "span2">
+				<ul class="nav nav-list">
+					<li><a href="../index.html">API Summery</a></li>
+					<li class="nav-header">Detailed Tutorial</li>
+					<li class="active"><a href="structure.html">Library's Structure</a></li>
+					<li><a href="overload.html">Function Overloading</a></li>
+					<li><a href="classes.html">Creating Classes</a></li>
+					<li><a href="inheritance.html">Inheritance</a></li>
+					<li><a href="abstract.html">Abstract Classes</a></li>
+					<li><a href="interfaces.html">Interfaces</a></li>
+					<li><a href="instanceof.html">Object::instanceOf</a></li>
+				</ul>
+			</div>
+			<div class = "span10">
+				<h3>How the library is structured?</h3>
+				<p><code>Classing{js}</code> APIs are mainly structured in two namespaces:</p>
+				<ul>
+					<li><b>The <i>classing</i> namespace:</b> which is the library's custom namespace that contains almost all of the library's APIs.</li>
+					<li><b>The <i>Function</i> namespace:</b> which is the bulit-in javascript object and it conatins the method <code>create</code> used to create overloaded functions.</li>
+				</ul>
+				<p>For purpose of simplicity and previty, some of the library's API's that are expected to be used repeatedly in some context are shortcuted in the global namespace.</p>
+				<p>The following figure depicts the complete structure of th library:</p>
+				<p><img src="../img/struct.png"/></p>
+				<p></p>
+				<div class="heads-up" style="width:700px;">
+					<h3>Heads Up!</h3>
+					<p>Global shortcuts are provieded, as mentioned, because these components are expected to be used repeatedly and it may be inconvienint to call them from the <code>classing</code> namespace every time. However, conflicts, though rare, could occur with these global shortcuts. If a conflict occur, or you suspect that a conflict will occur, you can always resort to the same components in the <code>classing</code> namespace.</p>
+				</div>
+			</div>
+		</div>
+
+
+
+		<script src="../js/jquery-1.10.1.min.js"></script>
+		<script src="../js/jquery-browser.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+
+		<script src="../js/jquery.snippet.min.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+
+				var opts = {
+					style : "golden",
+					showNum : false,
+					menu : false
+				};
+
+								
+
+				$(".code").each(function(){
+					$(this).snippet("javascript" , opts);
+					$(this).children().children().last().remove()
+				})
+
+				/*$("#code1").snippet("javascript" , opts);
+				$("#code1 ul li:last").remove();
+				$("#code2").snippet("javascript" , opts);
+				$("#code2 ul li:last").remove();
+				$("#code3").snippet("javascript" , opts);
+				$("#code3 ul li:last").remove();
+				$("#code4").snippet("javascript" , opts);
+				$("#code4 ul li:last").remove();
+				$("#code5").snippet("javascript" , opts);
+				$("#code5 ul li:last").remove();
+				$("#code6").snippet("javascript" , opts);
+				$("#code6 ul li:last").remove();
+				$("#code7").snippet("javascript" , opts);
+				//$("#code7 ul li:last").remove();
+				$("#code8").snippet("javascript" , opts);
+				$("#code8 ul li:last").remove();*/
+
+			});
+
+		</script>
+	</body>
+</html>

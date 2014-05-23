@@ -32,6 +32,7 @@
 				<ul class="nav nav-list">
 					<li><a href="../index.html">API Summery</a></li>
 					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="structure.html">Library's Structure</a></li>
 					<li><a href="overload.html">Function Overloading</a></li>
 					<li><a href="classes.html">Creating Classes</a></li>
 					<li><a href="inheritance.html">Inheritance</a></li>
@@ -46,29 +47,29 @@
 				So, the main difference between abstract classes and interfaces is that abstrcat classes define a characterization (which includes traits and behaviour) while interfaces only define behaviour.</p>
 				<p>Take, for example, a company that hire full time employees and part time employees. Both types share the behaviour of getting paid but each of them is getting piad in a different way than the other : the full time employee has a fixed monthly salary but the part time employee gets paid with an hourly rate . So, the behaviour of getting paid is represented by an interface, and both the full time and part time employees are classes that implements that interface.</p>
 				<h3>How to Create an Interface?</h3>
-				<p>creating an intrface is done by calling the function <code>Interface</code> in the following manner:</p>
+				<p>creating an intrface is done by calling the function <code>classing.Interface</code> in the following manner:</p>
 				<pre class="code">
-var InterfaceName = Interface({
+var InterfaceName = classing.Interface({
 	/* interface methods go here */
 });
 				</pre>
 				<p>The methods of the interfaces are just the signatures of the methods : the name and the parameter configuration only.So, an interface method must have an empty body (just like the abstrcat functions).Also, note that threre are no access modiferes in the defintion of an interface, all the methods of the interface are public.</p>
 				<p>Here's an example using the company analogy we used above:</p>
 				<pre class="code">
-var IPayable = Interface({
+var IPayable = classing.Interface({
 	getPaid : function(){}
 });
 				</pre>
 				<h3>How to Implement Interfaces?</h3>
-				<p>Implementing interfaces is done using <code>Class.Implements</code> in the following manner:</p>
+				<p>Implementing interfaces is done using <code>classing.Class.Implements</code> in the following manner:</p>
 				<pre class="code">
-var ClassNames = Class.Implements(/* reference  to interface(s) to implement */)({
+var ClassNames = classing.Class.Implements(/* reference  to interface(s) to implement */)({
 	/* class' defintion goes here */
 });
 				</pre>
 				<p>Continuing with the company example , here are the empolyee classes that implement the <b>IPayable</b> interface:</p>
 				<pre class="code">
-var FullTimeEmployee = Class.Implements(IPayable)({
+var FullTimeEmployee = classing.Class.Implements(IPayable)({
 	private : {
 		fixedSalary : 5000,
 		balance : 0,
@@ -80,7 +81,7 @@ var FullTimeEmployee = Class.Implements(IPayable)({
 	}
 });
 
-var PartTimeEmployee = Class.Implements(IPayable)({
+var PartTimeEmployee = classing.Class.Implements(IPayable)({
 	private : {
 		hourlyRate : 10,
 		hoursWorked: 0,
@@ -97,10 +98,10 @@ var PartTimeEmployee = Class.Implements(IPayable)({
 				</pre>
 				<p>A class can implement mutilple interfaces. Assuming that getting promoted is a behaviour the <b>FullTimeEmployee</b> have, we can write the following:</p>
 				<pre class="code">
-var IPromotable = Interface({
+var IPromotable = classing.Interface({
 	getPromotred : function(){}
 });
-var FullTimeEmployee = Class.Implements(IPayable , IPromotable)({
+var FullTimeEmployee = classing.Class.Implements(IPayable , IPromotable)({
 	private : {
 		fixedSalary : 5000,
 		balance : 0,
@@ -118,13 +119,13 @@ var FullTimeEmployee = Class.Implements(IPayable , IPromotable)({
 				</pre>
 				<p>A class can inherit form another class and also implement mutiple interfaces like in the following example: </p>
 				<pre class="code">
-var Person = Class({
+var Person = classing.Class({
 	public : {
 		name : null,
 		age : null
 	}
 });
-var FullTimeEmployee = Class.Extends(Person).Implements(IPayable , IPromotable)({
+var FullTimeEmployee = classing.Class.Extends(Person).Implements(IPayable , IPromotable)({
 	private : {
 		fixedSalary : 5000,
 		balance : 0,
@@ -146,7 +147,7 @@ var FullTimeEmployee = Class.Extends(Person).Implements(IPayable , IPromotable)(
 					<ul>
 						<li>Interface's methods can be regular javascript functions or <b>Classing{js}</b> overloaded functions.</li>
 						<li>In case of overloaded functions, each instance must have an empty body (like in abstract methods).</li>
-						<li>In a class that boths extends and implements, the <b>Extends(...)</b> must come before the <b>Implements(...)</b>. In other words, write : <code>Class.Extends(...).Implements(...)</code>. Writing them in the reverse order will throw an error.</li>
+						<li>In a class that boths extends and implements, the <b>Extends(...)</b> must come before the <b>Implements(...)</b>. In other words, write : <code>classing.Class.Extends(...).Implements(...)</code>. Writing them in the reverse order will throw an error.</li>
 					</ul>
 				</div>
 			</div>

@@ -31,6 +31,7 @@
 				<ul class="nav nav-list">
 					<li><a href="../index.html">API Summery</a></li>
 					<li class="nav-header">Detailed Tutorial</li>
+					<li><a href="structure.html">Library's Structure</a></li>
 					<li class="active"><a href="overload.html">Function Overloading</a></li>
 					<li><a href="classes.html">Creating Classes</a></li>
 					<li><a href="inheritance.html">Inheritance</a></li>
@@ -96,7 +97,7 @@ say("Hi" , "Welcome" , "to Classing{js}"); //Error
 sya("Hi" , "Welcome" , "to Classing{js}" , "v" , 1 , "." , 0); //Error
 				</pre>
 				</p>
-				<p>To make the code more readable , the library provides the constnat <code>xNonTyped</code> which is equal to <code>false</code> that can be passed as the first argument to <code>Function.create</code> indicating a non-typed overloading mode.
+				<p>To make the code more readable , the library provides the constnat <code>classing.xNonTyped</code> which is equal to <code>false</code> that can be passed as the first argument to <code>Function.create</code> indicating a non-typed overloading mode. As this constant is expectd to be used repeatedly, a global shortcut is provided so it could be written fast without calling it from the <code>classing</code> namespace.
 				<pre class="code" id="code3">
 var add = Function.create(xNonTyped , [function(a,b){return a+b;} , function(a,b,c){return a+b+c;}]);
 				</pre>
@@ -117,10 +118,13 @@ var echo = Function.create(xNonTyped , [function() {return "Void";} , function(a
 					</div>
 				</p>
 				<h3>Typed Overloading</h3>
-				<p>The syntax to create a typed overloaded function is similar to that of non-typed but with a little difference in the format of the overloads array. To fully define an overload instnace you'll need two elements of the array , the first one to hold the types list and the one that follows it to hold the function itself.the type list is created through the function <code>types</code></p>
+				<p>The syntax to create a typed overloaded function is similar to that of non-typed but with a little difference in the format of the overloads array. To fully define an overload instnace you'll need two elements of the array , the first one to hold the types list and the one that follows it to hold the function itself.the type list is created through the function <code>classing.types</code>.There's also a global shortcut for that function.</p>
 				<div class="doc">
 					<div class = "doc-header">types</div>
 					<div class = "doc-api">
+						classing.types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
+					</div>
+					<div class = "doc-api" style="margin-top:0px;display:block;" title="Global Shortcut">
 						types(c<sub>1</sub> , c<sub>2</sub> , c<sub>3</sub> , ...)
 					</div>
 					<div class="doc-component">
@@ -181,7 +185,7 @@ add(80,"Hello"); //Error
 add([1 4 7] , new Complex(7 , 52)); //Error
 				</pre>
 				</p>
-				<p>Like in non-typed overloading , the library provides the constnat <code>xTyped</code> which is equal to <code>true</code> to be passed as the first argument of <code>Function.create</code> indicating a typed overloading mode.
+				<p>Like in non-typed overloading , the library provides the constnat <code>classing.xTyped</code> which is equal to <code>true</code> to be passed as the first argument of <code>Function.create</code> indicating a typed overloading mode. An <code>xTyped</code> global shortcut is also provided.
 				<pre class ="code">
 var divide = Function.create(xTyped , [types(Number , Number) , function(a , b) {return a / b;}]);
 				</pre>
@@ -203,10 +207,10 @@ function &#60;constructorName&#62;(a,b,c,...){ ... }
 var &#60;constructorName&#62; = function(a,b,c, ...) { ... }
 					</pre>
 				</p>
-				<p>a <b>stamping step</b> must be made before <code>Classing{js}</code> can recognize it. the stamping is done using the function <code>xStamp</code></p>
+				<p>a <b>stamping step</b> must be made before <code>Classing{js}</code> can recognize it. the stamping is done using the function <code>classing.xStamp</code></p>
 				<div class="doc">
 					<div class="doc-header">xStamp</div>
-					<div class="doc-api">xStamp(Constructor)</div>
+					<div class="doc-api">classing.xStamp(Constructor)</div>
 					<div class="doc-component">
 						<span class="name">Constructor</span>
 						<span class="type">Function</span>
@@ -219,7 +223,7 @@ var &#60;constructorName&#62; = function(a,b,c, ...) { ... }
 var Human = function(a) {
 	this.age = a;
 }
-xStamp(Human);
+classing.xStamp(Human);
 var add = Function.create(xTyped , [
 	types(Human,Human),
 	function(H1,H2) {
