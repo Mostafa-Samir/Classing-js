@@ -1,4 +1,5 @@
 #Classing{js}
+######current version : v1.0.3
 Javascript's prototypal object oriented style, although powerful, is tedious, specially for those who come to javascript
 from a classical object oriented language like C++, Java or C#.<br/>
 <b>Classing{js}</b> is created to solve this problem by creating a classical-like OOP interface that behaves almost exactly
