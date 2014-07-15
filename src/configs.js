@@ -1,4 +1,5 @@
 var classing = {}; //Library's Namespace
+var _global = (typeof window != 'undefined' && this === window) ? window : global;
 
 /**
 	* _instantiateOnce : a constructor function that is can be used only once to create
@@ -34,14 +35,16 @@ classing._instantiateOnce = (function() {
 Object.defineProperty(classing , 'xTyped' , {value:true , writable:false});
 Object.defineProperty(classing , 'xNonTyped' , {value:false , writable:false});
 Object.defineProperty(classing , 'xSelf' , {value : new classing._instantiateOnce() , writable:false});
+Object.defineProperty(classing , 'base', {value : null, writable:true});
 //global shortcuts for the library's constants
-var xTyped = classing.xTyped;
-var xNonTyped = classing.xNonTyped;
-var xSelf = classing.xSelf;
+Object.defineProperty(_global, 'xTyped' ,{get : function() {return classing.xTyped}, set:function(v){}});
+Object.defineProperty(_global, 'xNonTyped' ,{get : function() {return classing.xNonTyped}, set:function(v){}});
+Object.defineProperty(_global, 'xSelf' ,{get : function() {return classing.xSelf}, set:function(v){}});
 /**
 	*base : a global variable used to reference the Base class in inhertance
 **/
-var base = null;
+Object.defineProperty(_global, 'base', {get:function(){return classing.base}, set:function(v){}});
+
 
 /**
 	xError : a custom error constructor to distinguish the library's errors from native errors

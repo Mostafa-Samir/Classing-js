@@ -58,7 +58,8 @@ classing.types = function() {
     return xList;
 }
 //global shortcut for types function
-var types = classing.types;
+Object.defineProperty(_global, 'types' , {get: function(){return classing.types}, set:function(v){}});
+
 
 Function.create = (function() {
 
