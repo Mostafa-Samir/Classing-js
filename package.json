@@ -1,0 +1,35 @@
+{
+  "name": "classing-js",
+  "version": "1.1.0",
+  "description": "a library that creates a classical-like oop interface directly into javascript",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mostafa-Samir/Classing-js.git"
+  },
+  "keywords": [
+    "class",
+    "oop",
+    "inheritance",
+    "interfaces",
+    "access-modifiers",
+    "abstract"
+  ],
+  "author": "Mostafa Samir <mostafa.3210@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mostafa-Samir/Classing-js/issues"
+  },
+  "homepage": "https://github.com/Mostafa-Samir/Classing-js",
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^1.20.1"
+  }
+}
