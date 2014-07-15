@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QUnit Test Suite</title>
-    <link rel="stylesheet" href="styles/qunit-1.14.0.css" media="screen">
-    <script type="text/javascript" src="scripts/qunit-1.14.0.js"></script>
-    <!-- Your project file goes here -->
-    <script type="text/javascript" src="scripts/classing.js"></script>
-    <!-- Your tests file goes here -->
-    <script type="text/javascript" src="scripts/nonPublicConstructors.js"></script>
+  <meta charset="utf-8">
+  <title>Non-Public Constructors</title>
+  <link rel="stylesheet" media="all" href="vendor/mocha.css">
 </head>
 <body>
-    <h1 id="qunit-header">QUnit Test Suite</h1>
-    <h2 id="qunit-banner"></h2>
-    <div id="qunit-testrunner-toolbar"></div>
-    <h2 id="qunit-userAgent"></h2>
-    <ol id="qunit-tests"></ol>
+ <div id="mocha"></div>
+  <div id="messages"></div>
+  <div id="fixtures"></div>
+  <script src="vendor/mocha.js"></script>
+  <script src="vendor/expect.js"></script>
+  <script src="lib/classing.js"></script>
+  <script>mocha.setup('bdd')</script>
+  <script src="_tests/8.nonPublicConstructors.js"></script>
+  <script>mocha.run();</script>
 </body>
 </html>

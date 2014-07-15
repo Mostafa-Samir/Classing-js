@@ -27,6 +27,7 @@
 	
 **/
 var classing = {}; //Library's Namespace
+var _global = (typeof window != 'undefined' && this === window) ? window : global;
 
 /**
 	* _instantiateOnce : a constructor function that is can be used only once to create
@@ -62,14 +63,16 @@ classing._instantiateOnce = (function() {
 Object.defineProperty(classing , 'xTyped' , {value:true , writable:false});
 Object.defineProperty(classing , 'xNonTyped' , {value:false , writable:false});
 Object.defineProperty(classing , 'xSelf' , {value : new classing._instantiateOnce() , writable:false});
+Object.defineProperty(classing , 'base', {value : null, writable:true});
 //global shortcuts for the library's constants
-var xTyped = classing.xTyped;
-var xNonTyped = classing.xNonTyped;
-var xSelf = classing.xSelf;
+Object.defineProperty(_global, 'xTyped' ,{get : function() {return classing.xTyped}, set:function(v){}});
+Object.defineProperty(_global, 'xNonTyped' ,{get : function() {return classing.xNonTyped}, set:function(v){}});
+Object.defineProperty(_global, 'xSelf' ,{get : function() {return classing.xSelf}, set:function(v){}});
 /**
 	*base : a global variable used to reference the Base class in inhertance
 **/
-var base = null;
+Object.defineProperty(_global, 'base', {get:function(){return classing.base}, set:function(v){}});
+
 
 /**
 	xError : a custom error constructor to distinguish the library's errors from native errors
@@ -181,7 +184,8 @@ classing.types = function() {
     return xList;
 }
 //global shortcut for types function
-var types = classing.types;
+Object.defineProperty(_global, 'types' , {get: function(){return classing.types}, set:function(v){}});
+
 
 Function.create = (function() {
 
@@ -628,26 +632,26 @@ classing.Class = (function() {
 					}
 				/** End Resolving Arguments **/
 	
-				base = obj._super;
+				classing.base =  obj._super;
 				return extra[key].apply(obj , args);
-				base = null;
+				classing.base =  null;
 			}
 		}
 		else if(type === "property") {
 			Object.defineProperty(obj , key , {
 				get : function() {
-					base = obj._super;
+					classing.base =  obj._super;
 					return extra[key].get.apply(obj , []);
-					base = null;
+					classing.base =  null;
 				},
 				set: function(newVal) {
 					/** Resolving the 'newVal' argument **/
 						if(newVal.constructor.timestamp === obj.constructor.timestamp) {
 							newVal = theEYE(0 , newVal);
 						}
-					base = obj._super;
+					classing.base =  obj._super;
 					return extra[key].set.apply(obj , [newVal]);
-					base = null;
+					classing.base =  null;
 				},
 				enumerable: true
 			});
@@ -1107,7 +1111,7 @@ classing.Class = (function() {
 					}
 				/** End Resolving Arguments **/
 
-				base = function() {
+				classing.base =  function() {
 					if(classProprties.parent !== xEmptyParent) {
 						if(classProprties.parent.isAbstract) {
 							$this._super = theEYE(1 , classProprties.parent , arguments);
@@ -1121,7 +1125,7 @@ classing.Class = (function() {
 						$this._super = new Object();
 					}
 				}
-				base.isBase = true;
+				classing.base.isBase =  true;
 
 				constructor.apply($this , args);
 
@@ -1396,7 +1400,8 @@ classing.Static = function(variable) {
 	return staticWrapper;
 }
 // a global shortcut for Static function
-var Static = classing.Static;
+Object.defineProperty(_global, 'Static' ,{get : function() {return classing.Static}, set:function(v){}});
+
 
 /**
 	Final is a Class modifier that marks a function/class unextendable
@@ -1413,9 +1418,10 @@ classing.Final = function(method) {
 	return method;
 }
 // a global shortcut for Final function
-var Final = function(method) {
-	return classing.Final(method);
-}
+Object.defineProperty(_global, 'Final' ,{
+	value : function(method) {
+		return classing.Final(method);
+}});
 
 /**
 	Final.Class : marks the class to be created as Final
@@ -1462,9 +1468,10 @@ classing.Abstract = function(method) {
 	return method;
 }
 // a global shortcut for Abstract function
-var Abstract = function(method) {
-	return classing.Abstract(method);
-}
+Object.defineProperty(_global, 'Abstract' ,{
+	value : function(method) {
+		return classing.Abstract(method);
+}});
 
 /**
 	Abstract.isNotImplemented : checks the method to make sure that its empty
