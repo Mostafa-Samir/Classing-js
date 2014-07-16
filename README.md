@@ -1,5 +1,5 @@
 #Classing{js}
-######current version : <a href="http://mostafa-samir.github.io/classingjs/news.html" target="_blank">v1.1.0</a>
+######current version : <a href="http://mostafa-samir.github.io/classingjs/news.html" target="_blank">v1.1.1</a>
 Javascript's prototypal object oriented style, although powerful, is tedious, specially for those who come to javascript
 from a classical object oriented language like C++, Java or C#.<br/>
 <b>Classing{js}</b> is created to solve this problem by creating a classical-like OOP interface that behaves almost exactly

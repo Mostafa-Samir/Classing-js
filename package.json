@@ -1,6 +1,6 @@
 {
   "name": "classing-js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a library that creates a classical-like oop interface directly into javascript",
   "main": "index.js",
   "directories": {
