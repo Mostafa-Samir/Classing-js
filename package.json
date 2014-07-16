@@ -30,7 +30,7 @@
   "bugs": {
     "url": "https://github.com/Mostafa-Samir/Classing-js/issues"
   },
-  "homepage": "https://github.com/Mostafa-Samir/Classing-js",
+  "homepage": "http://mostafa-samir.github.io/classingjs/",
   "devDependencies": {
     "expect.js": "^0.3.1",
     "mocha": "^1.20.1"
