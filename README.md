@@ -1,9 +1,15 @@
 #Classing{js}
-######current version : v1.0.3
+######current version : <a href="http://mostafa-samir.github.io/classingjs/news.html" target="_blank">v1.1.0</a>
 Javascript's prototypal object oriented style, although powerful, is tedious, specially for those who come to javascript
 from a classical object oriented language like C++, Java or C#.<br/>
 <b>Classing{js}</b> is created to solve this problem by creating a classical-like OOP interface that behaves almost exactly
 like any regular classical object oriented environment.<br/>
+#Install via NPM
+    npm install classing-js
+
+Include the module in your application through <code>require</code>:
+    <pre>var classing = require('classing-js');</pre>
+        
 #Features
 <ul>
 <li><p>Typed and non-typed function overloading with the ability to recognize custom types.</p></li>
